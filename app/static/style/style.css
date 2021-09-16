@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+    margin: 10px 25px;
+}
+
+.form-inline {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0 5%;
+}
+
+/* Carousel home page */
+.carousel-item img {
+    max-height: 800px;
+    object-fit: cover;
+    object-position: 0 10%;
+}
+
+/* Page sign in */
+.inpt-field {
+    margin: 10px 0;
+}
+
+/* Alerts */
+.flashed-alerts {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+@media screen and (max-width: 976px) {
+    .form-inline {
+        margin: 0;
+    }
+}

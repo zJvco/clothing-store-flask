@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign in
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Sign in</h1>
+    <p>Don't have an account? Please, <a href="{{ url_for('auth.signup_page') }}">Sign up</a> now.</p>
+    <form class="row g-3" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="inpt-field col-12">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", id="inputEmail4", placeholder="Email") }}
+        </div>
+        <div class="inpt-field col-12">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control", id="inputPassword4", placeholder="Password") }}
+        </div>
+        <div class="inpt-field col-12 d-flex justify-content-center">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

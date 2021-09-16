@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign up
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Sign up</h1>
+    <p>Already have an account? Please, <a href="{{ url_for('auth.signin_page') }}">Sign in</a> now.</p>
+    <form class="row g-3" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="inpt-field col-12">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control", id="inputUsername", placeholder="Username") }}
+        </div>
+        <div class="inpt-field col-md-8">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", id="inputEmail", placeholder="Email") }}
+        </div>
+        <div class="inpt-field col-md-4">
+            {{ form.phone.label(class="form-label") }}
+            {{ form.phone(class="form-control", id="inputPhone", placeholder="Phone") }}
+        </div>
+        <div class="inpt-field col-md-6">
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control", id="inputPassword", placeholder="Password") }}
+        </div>
+        <div class="inpt-field col-md-6">
+            {{ form.password_confirm.label(class="form-label") }}
+            {{ form.password_confirm(class="form-control", id="inputPasswordConfirm", placeholder="Confirm Password") }}
+        </div>
+        <div class="inpt-field col-12 d-flex justify-content-center">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}
