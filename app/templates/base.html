@@ -20,10 +20,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="{{ url_for('home.home_page') }}">Clothing Store</a>
+            <a class="navbar-brand" href="{{ url_for('views.home_page') }}">Clothing Store</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home.home_page') }}">Home</a>
+                    <a class="nav-link" href="{{ url_for('views.home_page') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('products.products_page') }}">Clothes</a>
@@ -33,22 +33,33 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%;">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                    style="width: 100%;">
                 <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="white-space: nowrap;">
-            {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="far fa-user"></i>
+                        {{ current_user.username }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
+                    </div>
                 </li>
-            {% else %}
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.signin_page') }}">Sign in</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.signup_page') }}">Sign up</a>
                 </li>
-            {% endif %}
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -174,24 +185,24 @@
         <!-- Copyright -->
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
             © 2021 Copyright:
-            <a class="text-reset fw-bold" href="{{ url_for('home.home_page') }}">ClothingStore.com</a>
+            <a class="text-reset fw-bold" href="{{ url_for('views.home_page') }}">ClothingStore.com</a>
         </div>
         <!-- Copyright -->
     </footer>
     <!-- Footer -->
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul class="flashed-alerts">
-            {% for category, msg in messages %}
-                <li>
-                    <div class="alert alert-{{ category }}" role="alert">
-                        {{ msg }}
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
+    {% if messages %}
+    <ul class="flashed-alerts">
+        {% for category, msg in messages %}
+        <li>
+            <div class="alert alert-{{ category }}" role="alert">
+                {{ msg }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% endwith %}
 
     <!-- Optional JavaScript -->

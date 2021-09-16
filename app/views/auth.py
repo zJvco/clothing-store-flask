@@ -21,7 +21,7 @@ def signin_page():
         if user and user.verify_password(password):
             login_user(user)
             flash("You are logged", category="success")
-            return redirect(url_for("home.home_page"))
+            return redirect(url_for("views.home_page"))
         else:
             flash("Email or password is invalid, please, try again", category="warning")
 
@@ -57,4 +57,4 @@ def signup_page():
 def logout():
     logout_user()
     flash("You are logged out", category="success")
-    return redirect(url_for("home.home_page"))
+    return redirect(url_for("views.home_page"))
