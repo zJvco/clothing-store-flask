@@ -31,4 +31,8 @@ def create_app():
     auth.configure(app)
     admin.configure()
 
+    from . import cli
+
+    cli.configure(app)
+
     return app
