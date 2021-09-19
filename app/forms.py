@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, PasswordField
 from wtforms.validators import Length, Email, DataRequired, EqualTo, Optional, ValidationError
 
-from app.models.tables import User
+from .models import User
 
 
 class SigninForm(FlaskForm):

@@ -1,16 +1,23 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
-from app import db
-from app.models.forms import SigninForm, SignupForm
-from app.models.tables import User
+from . import db
+from .forms import SigninForm, SignupForm
+from .models import User
 
 auth = Blueprint("auth", __name__)
 
 
+def configure(app):
+    app.register_blueprint(auth)
+
+
 @auth.route("/signin", methods=["GET", "POST"])
 def signin_page():
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home_page"))
+
     form = SigninForm()
 
     if form.validate_on_submit():
@@ -35,6 +42,9 @@ def signin_page():
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup_page():
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home_page"))
+        
     form = SignupForm()
 
     if form.validate_on_submit():

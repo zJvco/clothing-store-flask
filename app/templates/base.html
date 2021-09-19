@@ -26,7 +26,7 @@
                     <a class="nav-link" href="{{ url_for('views.home_page') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('products.products_page') }}">Clothes</a>
+                    <a class="nav-link" href="{{ url_for('views.products_page') }}">Clothes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">API</a>
@@ -45,9 +45,9 @@
                         <i class="far fa-user"></i>
                         {{ current_user.username }}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -50px;">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#">Purchases</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
                     </div>

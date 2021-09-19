@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-from app import db, bcrypt, login_manager
+from . import db, bcrypt, login_manager
 
 
 users_has_products = db.Table("users_has_products",
@@ -23,6 +23,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(128), nullable=False)
     phone = db.Column(db.Integer, unique=True)
     money = db.Column(db.Integer, nullable=False, default=0)
+    admin = db.Column(db.Boolean, default=False)
     created_date = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
@@ -53,13 +54,15 @@ class Product(db.Model):
     name = db.Column(db.String(45), unique=True, nullable=False)
     price = db.Column(db.Float, nullable=False)
     description = db.Column(db.Text(1000))
+    image = db.Column(db.String(240))
     created_date = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    def __init__(self, name, price, description):
+    def __init__(self, name, price, description, image):
         self.name = name
         self.price = price
         self.description = description
+        self.image = image
 
     def __repr__(self):
         return "<Product %r>" % self.id
