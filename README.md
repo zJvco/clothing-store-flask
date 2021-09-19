@@ -1,0 +1,1 @@
+Loja de Roupas feita em flask com authenticação, administração, bando de dados, etc.
