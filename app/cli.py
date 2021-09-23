@@ -13,10 +13,10 @@ def create_db():
 
 
 @click.command("create_user")
-@click.option("-u")
-@click.option("-e")
-@click.option("-p")
-@click.option("-t", type=int)
+@click.option("--username", "-u")
+@click.option("--email", "-e")
+@click.option("--password", "-p")
+@click.option("--phone", "-t", type=int)
 @with_appcontext
 def create_user(username, email, password, phone):
     try:

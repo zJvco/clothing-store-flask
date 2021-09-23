@@ -15,9 +15,9 @@ def home_page():
     return render_template("index.html")
 
 
-@views.route("/products")
-def products_page():
+@views.route("/store")
+def store_page():
     products = Product.query.all()
     print(products)
 
-    return render_template("products.html", products=products)
+    return render_template("store.html", products=products)

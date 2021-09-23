@@ -33,12 +33,8 @@ class User(db.Model, UserMixin):
     def __init__(self, username, email, password, phone):
         self.username = username
         self.email = email
-        self.password = bcrypt.generate_password_hash(password)
+        self.password = bcrypt.generate_password_hash(password).decode("utf-8")
         self.phone = phone
-
-    # @property
-    # def money(self):
-    #     return self.money
 
     def verify_password(self, pwd):
         return bcrypt.check_password_hash(self.password, pwd)
