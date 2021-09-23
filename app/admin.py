@@ -11,7 +11,7 @@ def configure():
 
 
 class StoreAdmin(ModelView):
-    form_excluded_columns=("created_date", "updated_date")
+    form_excluded_columns=("created_date", "updated_date", "products", "adresses", "user_products")
 
     def is_accessible(self):
         return current_user.is_authenticated
