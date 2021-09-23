@@ -6,21 +6,21 @@ Products
 
 {% block content %}
 {% if products %}
-    {% for product in products %}
-        <div class="container card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                    content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-                <span style="white-space: nowrap; margin-left: 15px;">Price $</span>
-            </div>
-        </div>
-    {% endfor %}
-{% else %}
-    <div class="alert alert-warning text-center" role="alert">
-        The store not already have products
+{% for product in products %}
+<div class="container card" style="width: 18rem;">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <span style="white-space: nowrap; margin-left: 15px;">Price $</span>
     </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="alert alert-warning text-center" role="alert">
+    The store not already have products
+</div>
 {% endif %}
 {% endblock %}

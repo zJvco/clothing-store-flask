@@ -19,7 +19,7 @@ class UserAdmin(ModelView):
     column_searchable_list = ["email"]
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        return current_user.is_authenticated and current_user.admin
 
 
 class ProductsAdmin(ModelView):
@@ -29,4 +29,4 @@ class ProductsAdmin(ModelView):
     column_type_formatters = {"image": FileField(label="Image", validators=[DataRequired()])}
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        return current_user.is_authenticated and current_user.admin

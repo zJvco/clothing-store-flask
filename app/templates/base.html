@@ -48,6 +48,9 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -50px;">
                         <a class="dropdown-item" href="#">Profile</a>
                         <a class="dropdown-item" href="#">Purchases</a>
+                        {% if current_user.admin %}
+                        <a class="dropdown-item" href="{{ url_for('admin.index') }}">Administration</a>
+                        {% endif %}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
                     </div>
