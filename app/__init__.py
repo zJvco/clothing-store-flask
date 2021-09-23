@@ -18,6 +18,7 @@ def create_app():
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DB_CONNECTION")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["FLASK_ADMIN_SWATCH"] = "flatly"
 
     db.init_app(app)
     login_manager.init_app(app)

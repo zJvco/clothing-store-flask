@@ -1,4 +1,3 @@
-from flask import redirect, url_for
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 
@@ -22,20 +21,12 @@ class UserAdmin(ModelView):
     def is_accessible(self):
         return current_user.is_authenticated
 
-    # def inaccessible_callback(self):
-    #     return redirect(url_for("views.home_page"))
-
 
 class ProductsAdmin(ModelView):
     form_excluded_columns = ["created_date", "updated_date", "user_products"]
     column_exclude_list = ["image"]
 
-    # form_extra_fields = {
-    #     "file": FileField(label="Product Image", validators=[DataRequired()])
-    # }
+    column_type_formatters = {"image": FileField(label="Image", validators=[DataRequired()])}
 
     def is_accessible(self):
         return current_user.is_authenticated
-
-    # def inaccessible_callback(self):
-    #     return redirect(url_for("views.home_page"))
