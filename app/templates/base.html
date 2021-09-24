@@ -43,7 +43,7 @@
                         {{ current_user.username }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -50px;">
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="{{ url_for('views.profile_page') }}">Profile</a>
                         <a class="dropdown-item" href="#">Purchases</a>
                         {% if current_user.admin %}
                         <a class="dropdown-item" href="{{ url_for('admin.index') }}">Administration</a>
@@ -185,7 +185,7 @@
         <!-- Copyright -->
         <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
             © 2021 Copyright:
-            <a class="text-reset fw-bold" href="{{ url_for('views.home_page') }}">ClothingStore.com</a>
+            <a class="text-reset fw-bold" href="{{ url_for('views.home_page') }}">clothingstore.com</a>
         </div>
         <!-- Copyright -->
     </footer>

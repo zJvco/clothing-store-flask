@@ -24,10 +24,11 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.Integer, unique=True)
     money = db.Column(db.Integer, nullable=False, default=0)
     admin = db.Column(db.Boolean, default=False)
+    image = db.Column(db.String(240))
     created_date = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
-    products = db.relationship("Product", secondary=users_has_products, backref=db.backref("user_products", lazy="dynamic"))
+    products = db.relationship("Product", secondary=users_has_products, backref=db.backref("owner_users", lazy="dynamic"))
     adresses = db.relationship("Address", backref=db.backref("owner_user"))
 
     def __init__(self, username, email, password, phone):

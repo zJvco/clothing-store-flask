@@ -36,7 +36,7 @@ class UserAdmin(ModelView):
 
 
 class ProductsAdmin(ModelView):
-    form_excluded_columns = ["created_date", "updated_date", "user_products"]
+    form_excluded_columns = ["created_date", "updated_date", "owner_users"]
     column_exclude_list = ["image", "description"]
 
     def on_model_change(self, form, model, is_created):
