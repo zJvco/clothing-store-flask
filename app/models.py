@@ -33,7 +33,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     phone = db.Column(db.Integer, unique=True)
-    money = db.Column(db.Integer, nullable=False, default=0)
+    money = db.Column(db.Float, nullable=False, default=0)
     admin = db.Column(db.Boolean, default=False)
     image = db.Column(db.String(240), default=random_choice_image("./app/static/img/profile/default"))
     gender = db.Column(db.String(20), default="undefined".title(), nullable=False)
@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
     products = db.relationship("Product", secondary=users_has_products, backref=db.backref("owner_users", lazy="dynamic"))
     adresses = db.relationship("Address", backref=db.backref("owner_user"))
 
-    def __init__(self, username, email, password, phone, gender):
+    def __init__(self, username, email, password, phone=None, gender="undefined"):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode("utf-8")

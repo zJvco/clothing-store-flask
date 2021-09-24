@@ -10,7 +10,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 adm = Admin(name="Clothing Store", template_mode="bootstrap3")
-migrate = Migrate()
+migrate = Migrate(compare_type=True)
 
 
 def create_app():
@@ -22,7 +22,10 @@ def create_app():
 
     db.init_app(app)
     login_manager.init_app(app)
-    adm.init_app(app)
+
+    from .admin import IndexAdmin
+
+    adm.init_app(app, index_view=IndexAdmin())
     migrate.init_app(app, db)
 
     from . import admin

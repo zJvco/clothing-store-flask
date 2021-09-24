@@ -23,10 +23,15 @@ def drop_db():
 @click.option("--email", "-e")
 @click.option("--password", "-p")
 @click.option("--phone", "-t", type=int)
+@click.option("--gender", "-g")
 @with_appcontext
-def create_user(username, email, password, phone):
+def create_user(username, email, password, phone, gender):
+    if gender and (gender.lower() != "male" or gender.lower() != "female" or gender.lower() != "undefined"):
+        print("Gender is incorrect, you can only type [male / female / undefined] or not type")
+        return
+
     try:
-        user = User(username, email, password, phone)
+        user = User(username, email, password, phone, gender)
         db.session.add(user)
         db.session.commit()
     except SQLAlchemyError:
@@ -58,7 +63,7 @@ def make_admin(email):
         if user.admin:
             print(f"User {user.username} is already admin")
             return
-
+            
         answer = str(input(f"You have sure to give admin to {user.username}? [Y / N]: "))
         if answer.upper() == "Y" or answer.upper() == "YES":
             try:
