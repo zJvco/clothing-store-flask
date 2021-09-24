@@ -6,18 +6,21 @@ Products
 
 {% block content %}
 {% if products %}
+<div class="container d-flex">
 {% for product in products %}
-<div class="container card" style="width: 18rem;">
-    <img class="card-img-top" src="..." alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-        <span style="white-space: nowrap; margin-left: 15px;">Price $</span>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="static/img/{{ product.image }}" alt="{{ product.name }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="#" class="btn btn-primary">Purchase</a>
+            <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
+        </div>
     </div>
-</div>
 {% endfor %}
+</div>
 {% else %}
 <div class="alert alert-warning text-center" role="alert">
     The store not already have products

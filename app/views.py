@@ -18,6 +18,4 @@ def home_page():
 @views.route("/store")
 def store_page():
     products = Product.query.all()
-    print(products)
-
     return render_template("store.html", products=products)

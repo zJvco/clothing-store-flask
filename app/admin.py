@@ -37,7 +37,10 @@ class UserAdmin(ModelView):
 
 class ProductsAdmin(ModelView):
     form_excluded_columns = ["created_date", "updated_date", "user_products"]
-    column_exclude_list = ["image"]
+    column_exclude_list = ["image", "description"]
+
+    def on_model_change(self, form, model, is_created):
+        model.image = form.image.data.filename
 
     def scaffold_form(self):
         form = super().scaffold_form()
