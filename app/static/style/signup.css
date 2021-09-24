@@ -1,0 +1,13 @@
+.radio-list {
+    display: flex;
+    list-style-type: none;
+    margin: 0
+}
+
+.radio-list li {
+    margin-right: 15px;
+}
+
+.radio-list li label {
+    margin: 0;
+}

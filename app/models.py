@@ -6,7 +6,6 @@ from sqlalchemy.sql import func
 
 from . import db, bcrypt, login_manager
 
-
 users_has_products = db.Table("users_has_products",
     db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
     db.Column("product_id", db.Integer, db.ForeignKey("products.id"))

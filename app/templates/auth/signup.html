@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/signup.css') }}">
+{% endblock %}
+
 {% block title %}
 Sign up
 {% endblock %}
@@ -21,6 +25,10 @@ Sign up
         <div class="inpt-field col-md-4">
             {{ form.phone.label(class="form-label") }}
             {{ form.phone(class="form-control", id="inputPhone", placeholder="Phone") }}
+        </div>
+        <div class="inpt-field col-12">
+            {{ form.gender.label(class="form-label") }}
+            {{ form.gender(class="radio-list") }}
         </div>
         <div class="inpt-field col-md-6">
             {{ form.password.label(class="form-label") }}

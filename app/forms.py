@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, PasswordField
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, RadioField
 from wtforms.validators import Length, Email, DataRequired, EqualTo, Optional, ValidationError
 
 from .models import User
@@ -14,6 +14,7 @@ class SigninForm(FlaskForm):
 class SignupForm(FlaskForm):
     username = StringField(label="Username", validators=[Length(min=4, max=50), DataRequired()])
     email = StringField(label="Email", validators=[Email(), DataRequired()])
+    gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('radio1', 'Male'), ('radio2', 'Female'), ('radio3', 'Undefined')])
     phone = IntegerField(label="Number Phone", validators=[Optional()])
     password = PasswordField(label="Password", validators=[Length(min=6, max=128), DataRequired()])
     password_confirm = PasswordField(label="Confirm Password", validators=[EqualTo("password"), DataRequired()])
