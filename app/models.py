@@ -43,11 +43,12 @@ class User(db.Model, UserMixin):
     products = db.relationship("Product", secondary=users_has_products, backref=db.backref("owner_users", lazy="dynamic"))
     adresses = db.relationship("Address", backref=db.backref("owner_user"))
 
-    def __init__(self, username, email, password, phone):
+    def __init__(self, username, email, password, phone, gender):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode("utf-8")
         self.phone = phone
+        self.gender = gender
 
     def verify_password(self, pwd):
         return bcrypt.check_password_hash(self.password, pwd)

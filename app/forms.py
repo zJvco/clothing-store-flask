@@ -14,7 +14,7 @@ class SigninForm(FlaskForm):
 class SignupForm(FlaskForm):
     username = StringField(label="Username", validators=[Length(min=4, max=50), DataRequired()])
     email = StringField(label="Email", validators=[Email(), DataRequired()])
-    gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('radio1', 'Male'), ('radio2', 'Female'), ('radio3', 'Undefined')])
+    gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('undefined', 'Undefined')])
     phone = IntegerField(label="Number Phone", validators=[Optional()])
     password = PasswordField(label="Password", validators=[Length(min=6, max=128), DataRequired()])
     password_confirm = PasswordField(label="Confirm Password", validators=[EqualTo("password"), DataRequired()])

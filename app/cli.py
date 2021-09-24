@@ -1,4 +1,5 @@
-import click, sys
+import click
+from time import sleep
 from flask.cli import with_appcontext
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -48,8 +49,37 @@ def delete_user(id):
         print(f"User {user.username} deleted successfully!")
 
 
+@click.command("make_admin")
+@click.option("--email", "-e")
+@with_appcontext
+def make_admin(email):
+    user = User.query.filter_by(email=email).first()
+    if user:
+        if user.admin:
+            print(f"User {user.username} is already admin")
+            return
+
+        answer = str(input(f"You have sure to give admin to {user.username}? [Y / N]: "))
+        if answer.upper() == "Y" or answer.upper() == "YES":
+            try:
+                user.admin = True
+                db.session.commit()
+            except SQLAlchemyError:
+                raise "An error was found, please, try again"
+            else:
+                print(f"User {user.username} has admin now")
+        elif answer.upper() == "N" or answer.upper() == "NO":
+            print("Leaving...")
+            sleep(2)
+        else:
+            print("The options not correspond, try again")
+    else:
+        print("User not found, please, check the email again")
+
+
 def configure(app):
     app.cli.add_command(create_db)
     app.cli.add_command(drop_db)
     app.cli.add_command(create_user)
     app.cli.add_command(delete_user)
+    app.cli.add_command(make_admin)
