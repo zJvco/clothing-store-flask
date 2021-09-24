@@ -1,3 +1,6 @@
+from random import choice
+from os import listdir
+from os.path import isfile, join
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
@@ -8,6 +11,15 @@ users_has_products = db.Table("users_has_products",
     db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
     db.Column("product_id", db.Integer, db.ForeignKey("products.id"))
 )
+
+
+def random_choice_image(path):
+    file_list = []
+    for file in listdir(path):
+        if isfile(join(path, file)):
+            file_list.append(file)
+    return choice(file_list)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -24,7 +36,8 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.Integer, unique=True)
     money = db.Column(db.Integer, nullable=False, default=0)
     admin = db.Column(db.Boolean, default=False)
-    image = db.Column(db.String(240))
+    image = db.Column(db.String(240), default=random_choice_image("./app/static/img/profile/default"))
+    gender = db.Column(db.String(20), default="undefined".title(), nullable=False)
     created_date = db.Column(db.DateTime(timezone=True), default=func.now())
     updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
 
