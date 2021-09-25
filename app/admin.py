@@ -35,12 +35,15 @@ class UserAdmin(ModelView):
     }
 
     def on_model_change(self, form, model, is_created):
+        if type(form.image.data) is str:
+            return
+
         model.image = form.image.data.filename
 
     def scaffold_form(self):
         form = super().scaffold_form()
         form.gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('undefined', 'Undefined')])
-        form.image = FileField(label="Image", validators=[FileRequired(), FileAllowed(["jpg", "png"], "You can upload only images")])
+        form.image = FileField(label="Image", validators=[FileAllowed(["jpg", "png"], "You can upload only images")])
         return form
 
     def is_accessible(self):

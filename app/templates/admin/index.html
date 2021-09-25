@@ -1,5 +1,16 @@
 {% extends "admin/master.html" %}
 
+{% block head_css %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/all.min.css') }}">
+{% endblock %}
+
+{% block access_control %}
+<a href="{{ url_for('views.home_page') }}" style="float: right; font-size: 25px;">
+    <i style="transform: rotate(180deg);" class="fas fa-sign-out-alt"></i>
+</a>
+{% endblock %}
+
 {% block body %}
 Hello world
 {% endblock %}
