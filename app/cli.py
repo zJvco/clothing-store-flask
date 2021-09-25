@@ -44,14 +44,17 @@ def create_user(username, email, password, phone, gender):
 @click.option("-id", type=int)
 @with_appcontext
 def delete_user(id):
-    try:
-        user = User.query.filter_by(id=id).first()
-        db.session.delete(user)
-        db.session.commit()
-    except SQLAlchemyError:
-        raise "An error was found, please, try again"
+    user = User.query.filter_by(id=id).first()
+    if user:
+        try:
+            db.session.delete(user)
+            db.session.commit()
+        except SQLAlchemyError:
+            raise "An error was found, please, try again"
+        else:
+            print(f"User {user.username} deleted successfully!")
     else:
-        print(f"User {user.username} deleted successfully!")
+        print("User not found, please, check the id again")
 
 
 @click.command("make_admin")

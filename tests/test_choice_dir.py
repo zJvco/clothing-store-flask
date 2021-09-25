@@ -4,5 +4,7 @@ from os.path import isfile, join
 
 path = "../app/static/img/profile/default"
 
+print(listdir(path))
+
 dirs = [f for f in listdir(path) if isfile(join(path, f))]
-print(choice(dirs))
+print(path + "/" + choice(dirs))

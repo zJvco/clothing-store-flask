@@ -17,7 +17,7 @@ def random_choice_image(path):
     for file in listdir(path):
         if isfile(join(path, file)):
             file_list.append(file)
-    return choice(file_list)
+    return f"{path}/{choice(file_list)}"
 
 
 @login_manager.user_loader

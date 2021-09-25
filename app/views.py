@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template, redirect, url_for
 
-from .models import Product
+from .models import User, Product
 
 views = Blueprint("views", __name__)
 
