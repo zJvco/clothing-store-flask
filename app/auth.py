@@ -48,7 +48,9 @@ def signup_page():
     form = SignupForm()
 
     if form.validate_on_submit():
-        new_user = User(form.username.data, form.email.data, form.password.data, form.phone.data, form.gender.data)
+        new_user = User(form.username.data, form.email.data, form.password.data)
+        new_user.phone = form.phone.data
+        new_user.gender = form.gender.data
         db.session.add(new_user)
         db.session.commit()
         flash("You are registred now", category="success")

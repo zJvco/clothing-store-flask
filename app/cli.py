@@ -22,16 +22,10 @@ def drop_db():
 @click.option("--username", "-u")
 @click.option("--email", "-e")
 @click.option("--password", "-p")
-@click.option("--phone", "-t", type=int)
-@click.option("--gender", "-g")
 @with_appcontext
-def create_user(username, email, password, phone, gender):
-    if gender and (gender.lower() != "male" or gender.lower() != "female" or gender.lower() != "undefined"):
-        print("Gender is incorrect, you can only type [male / female / undefined] or not type")
-        return
-
+def create_user(username, email, password):
     try:
-        user = User(username, email, password, phone, gender)
+        user = User(username, email, password)
         db.session.add(user)
         db.session.commit()
     except SQLAlchemyError:
