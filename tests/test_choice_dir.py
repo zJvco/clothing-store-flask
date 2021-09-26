@@ -8,3 +8,6 @@ print(listdir(path))
 
 dirs = [f for f in listdir(path) if isfile(join(path, f))]
 print(path + "/" + choice(dirs))
+
+pi = path.find("static")
+print(path[pi:])

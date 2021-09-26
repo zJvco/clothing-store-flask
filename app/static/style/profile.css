@@ -1,0 +1,36 @@
+.container {
+    margin: 50px auto;
+}
+
+/* Coluna da imagem e do nome do usuário */
+
+.profile-img {
+    text-align: center;
+    max-width: 200px;
+}
+
+.profile-img img {
+    display: block;
+    border-radius: 50%;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Coluna do conteudo do perfil */
+.profile-content {
+    margin: 0 2%;
+}
+
+.profile-content .radio-list {
+    display: flex;
+    list-style-type: none;
+    margin: 0
+}
+
+.profile-content .radio-list li {
+    margin-right: 15px;
+}
+
+.profile-content .radio-list li label {
+    margin: 0;
+}

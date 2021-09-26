@@ -9,7 +9,7 @@ Products
 <div class="container d-flex flex-wrap">
 {% for product in products %}
     <div class="card mx-auto" style="width: 18rem; margin: 20px 0;">
-        <img class="card-img-top" src="static/img/{{ product.image }}" alt="{{ product.name }}">
+        <img class="card-img-top" src="{{ product.image }}" alt="{{ product.name }}">
         <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>

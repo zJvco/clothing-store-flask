@@ -14,10 +14,12 @@ users_has_products = db.Table("users_has_products",
 
 def random_choice_image(path):
     file_list = []
+    pi = path.find("static")
+
     for file in listdir(path):
         if isfile(join(path, file)):
             file_list.append(file)
-    return f"{path}/{choice(file_list)}"
+    return f"{path[pi:]}/{choice(file_list)}"
 
 
 @login_manager.user_loader

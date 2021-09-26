@@ -1,17 +1,84 @@
 {% extends "base.html" %}
 
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/profile.css') }}">
+{% endblock %}
+
 {% block title %}
 Profile
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="profile-img">
-        <img src="" alt="user image">
+<div class="container d-flex">
+    <div class="col profile-img">
+        <img src="{{ current_user.image }}" alt="user image">
         <span>{{ current_user.username }}</span>
     </div>
-    <div class="profile-content">
+    <div class="col profile-content">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a id="tab-link" class="nav-link active" aria-current="page" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a id="tab-link" class="nav-link" href="#">Adresses</a>
+            </li>
+        </ul>
+
+        <div class="user-form">
+            <form class="row g-3" method="POST">
+                {{ profile_form.hidden_tag() }}
+                <div class="inpt-field col-12">
+                    {{ profile_form.username.label(class="form-label") }}
+                    {{ profile_form.username(class="form-control", id="inputUsername", placeholder="Username", value=current_user.username, readonly="true", disabled="true") }}
+                </div>
+                <div class="inpt-field col-md-8">
+                    {{ profile_form.email.label(class="form-label") }}
+                    {{ profile_form.email(class="form-control", id="inputEmail", placeholder="Email", value=current_user.email, readonly="true", disabled="true") }}
+                </div>
+                <div class="inpt-field col-md-4">
+                    {{ profile_form.phone.label(class="form-label") }}
+                    {% if current_user.phone != None %}
+                        {{ profile_form.phone(class="form-control", id="inputPhone", placeholder="Phone", value=current_user.phone, readonly="true", disabled="true") }}
+                    {% else %}
+                        {{ profile_form.phone(class="form-control", id="inputPhone", placeholder="Phone", readonly="true", disabled="true") }}
+                    {% endif %}
+                </div>
+                <div class="inpt-field col-12">
+                    {{ profile_form.gender.label() }}
+                    <ul class="radio-list">
+                        {% for radio in profile_form.gender %}
+                        <li>
+                            {% if current_user.gender.lower() == radio.data %}
+                                {{ radio(checked="true", disabled="true") }}
+                            {% else %}
+                                {{ radio(disabled="true") }}
+                            {% endif %}
+                            {{ radio.label() }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="inpt-field col-md-12">
+                    {{ profile_form.password.label(class="form-label") }}
+                    {{ profile_form.password(class="form-control", id="inputPassword", placeholder="Password", readonly="true", disabled="true") }}
+                </div>
+                <div class="border-top my-3" style="width: 100%;"></div>
+                <div class="col-md-12" id="submit-field" style="text-align: right; display: none;">
+                    {{ profile_form.submit(class="btn btn-primary") }}
+                    <button type="button" id="cancel-edit" class="btn btn-danger">Cancel</button>
+                </div>
+            </form>
+            <button class="btn btn-primary" id="edit-user" style="float: right;">Edit</button>
+        </div>
+
+        <div class="address-form">
+
+        </div>
 
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
 {% endblock %}

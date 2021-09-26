@@ -27,8 +27,15 @@ Sign up
             {{ form.phone(class="form-control", id="inputPhone", placeholder="Phone") }}
         </div>
         <div class="inpt-field col-12">
-            {{ form.gender.label(class="form-label") }}
-            {{ form.gender(class="radio-list") }}
+            {{ form.gender.label() }}
+            <ul class="radio-list">
+                {% for radio in form.gender %}
+                <li>
+                    {{ radio }}
+                    {{ radio.label() }}
+                </li>
+                {% endfor %}
+            </ul>
         </div>
         <div class="inpt-field col-md-6">
             {{ form.password.label(class="form-label") }}
