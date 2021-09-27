@@ -18,7 +18,7 @@
         </div>
         <div class="inpt-field col-md-12">
             {{ address_form.city.label(class="form-label") }}
-            {{ address_form.city(class="form-control", id="inputNumber", placeholder="City") }}
+            {{ address_form.city(class="form-control", id="inputCity", placeholder="City") }}
         </div>
         <div class="inpt-field col-md-12">
             {{ address_form.complement.label(class="form-label") }}
@@ -30,7 +30,7 @@
         </div>
     </form>
     <div class="border-top my-3" style="width: 100%;"></div>
-
+    <h4 style="margin: 25px 0;">My Addresses</h4>
     <div class="adresses-owners d-flex flex-wrap">
         {% for address in current_user.adresses %}
         <div class="card" style="width: 100%; margin-bottom: 20px;">
@@ -38,8 +38,49 @@
                 <h5 class="card-title">{{ address.cep }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ address.city }}</h6>
                 <p class="card-text">{{ address.street }} - {{ address.number }}</p>
-                <a href="#" class="card-link">Edit</a>
+                <a href="#" class="card-link" data-toggle="modal" data-target="#editAddressModal-{{ address.id }}">Edit</a>
                 <a href="#" class="card-link text-danger">Remove</a>
+            </div>
+        </div>
+        <div class="modal fade" id="editAddressModal-{{ address.id }}" tabindex="-1" role="dialog" aria-labelledby="editAddressModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit your address</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for(request.endpoint) }}/edit/{{ address.id }}" class="row g-3" method="POST">
+                            {{ edit_address_form.hidden_tag() }}
+                            <div class="inpt-field col-12">
+                                {{ edit_address_form.cep.label(class="form-label") }}
+                                {{ edit_address_form.cep(class="form-control", id="inputEditCep", placeholder="CEP", value=address.cep) }}
+                            </div>
+                            <div class="inpt-field col-md-8">
+                                {{ edit_address_form.street.label(class="form-label") }}
+                                {{ edit_address_form.street(class="form-control", id="inputEditStreet", placeholder="Street", value=address.street) }}
+                            </div>
+                            <div class="inpt-field col-md-4">
+                                {{ edit_address_form.number.label(class="form-label") }}
+                                {{ edit_address_form.number(class="form-control", id="inputEditNumber", placeholder="Number", value=address.number) }}
+                            </div>
+                            <div class="inpt-field col-md-12">
+                                {{ edit_address_form.city.label(class="form-label") }}
+                                {{ edit_address_form.city(class="form-control", id="inputEditCity", placeholder="City", value=address.city) }}
+                            </div>
+                            <div class="inpt-field col-md-12">
+                                {{ edit_address_form.complement.label(class="form-label") }}
+                                {{ edit_address_form.complement(class="form-control", id="inputEditComplement", placeholder="Complement", value=address.complement) }}
+                            </div>
+                            <div class="inpt-field col-md-12 modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                {{ edit_address_form.submit(class="btn btn-primary") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}

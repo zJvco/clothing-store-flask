@@ -1,10 +1,10 @@
-from flask import Blueprint, flash
+from flask import Blueprint, flash, abort, request
 from flask import render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from . import db
 from .models import User, Product, Address
-from .forms import ProfileForm, AddressForm
+from .forms import ProfileForm, AddressForm, EditAddressForm
 
 views = Blueprint("views", __name__)
 
@@ -49,7 +49,7 @@ def profile_page():
                 return redirect(url_for("views.profile_page"))
 
         db.session.commit()
-        flash("Changes were made sucefully", category="success")
+        flash("Changes were made successfully", category="success")
         return redirect(url_for('views.profile_page'))
 
     if profile_form.errors != {}:
@@ -64,6 +64,7 @@ def profile_page():
 @login_required
 def profile_address_page():
     address_form = AddressForm()
+    edit_address_form = EditAddressForm()
 
     if address_form.validate_on_submit():
         new_address = Address(cep=address_form.cep.data, street=address_form.street.data,
@@ -71,7 +72,7 @@ def profile_address_page():
                             complement=address_form.complement.data, user_id=current_user.id)
         db.session.add(new_address)
         db.session.commit()
-        flash("Address were created sucefully", category="success")
+        flash("Address were created successfully", category="success")
         return redirect(url_for('views.profile_address_page'))
 
     if address_form.errors != {}:
@@ -79,4 +80,31 @@ def profile_address_page():
             for msg in errors:
                 flash(msg, category="danger")
 
-    return render_template("profile/address.html", address_form=address_form)
+    return render_template("profile/address.html", address_form=address_form, edit_address_form=edit_address_form)
+
+
+@views.route("/profile/address/edit/<id>", methods=["GET", "POST"])
+@login_required
+def profile_address_edit_page(id):
+    edit_address_form = EditAddressForm()
+
+    if edit_address_form.validate_on_submit():
+        address = Address.query.filter_by(id=id).first()
+        if address.user_id == current_user.id:
+            address.cep = request.form.get("cep")
+            address.street = request.form.get("street")
+            address.number = request.form.get("number")
+            address.city = request.form.get("city")
+            address.complement = request.form.get("complement")
+            db.session.commit()
+            flash("Address changed successfully", category="success")
+            return redirect(url_for("views.profile_address_page"))
+        else:
+            abort(401)
+
+    if edit_address_form.errors != {}:
+        for errors in edit_address_form.errors.values():
+            for msg in errors:
+                flash(msg, category="danger")
+
+    return redirect(url_for("views.profile_address_page"))
