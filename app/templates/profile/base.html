@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/profile.css') }}">
+{% endblock %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+<div class="container d-flex">
+    <div class="col profile-img">
+        <img src="{{ url_for('static', filename=current_user.image) }}" alt="user image">
+        <span>{{ current_user.username }}</span>
+    </div>
+    <div class="col profile-content">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a id="tab-link-profile" class="nav-link {% if url_for(request.endpoint) == '/profile' %}active{% endif %}" aria-current="page" href="{{ url_for('views.profile_page') }}">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a id="tab-link-adresses" class="nav-link {% if url_for(request.endpoint) == '/profile/address' %}active{% endif %}" href="{{ url_for('views.profile_address_page') }}">Adresses</a>
+            </li>
+        </ul>
+        
+        {% block form_content %}{% endblock %}
+
+    </div>
+</div>
+{% endblock %}

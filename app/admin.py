@@ -58,7 +58,7 @@ class ProductsAdmin(ModelView):
     column_exclude_list = ["image", "description"]
 
     def on_model_change(self, form, model, is_created):
-        path = "/static/img"
+        path = "/img"
         model.image = f"{path}/{form.image.data.filename}"
 
     def scaffold_form(self):

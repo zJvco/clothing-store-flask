@@ -14,7 +14,7 @@ users_has_products = db.Table("users_has_products",
 
 def random_choice_image(path):
     file_list = []
-    pi = path.find("static")
+    pi = path.find("img")
 
     for file in listdir(path):
         if isfile(join(path, file)):
@@ -91,7 +91,7 @@ class Address(db.Model):
     street = db.Column("street", db.String(200), nullable=False)
     number = db.Column("number", db.Integer, nullable=False)
     city = db.Column("city", db.String(100), nullable=False)
-    complement = db.Column("complement", db.Text(500))
+    complement = db.Column("complement", db.String(140))
 
     user_id = db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
 

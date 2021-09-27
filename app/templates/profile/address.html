@@ -1,0 +1,48 @@
+{% extends "profile/base.html" %}
+
+{% block form_content %}
+<div id="address-form" class="address-form">
+    <form class="row g-3" method="POST">
+        {{ address_form.hidden_tag() }}
+        <div class="inpt-field col-12">
+            {{ address_form.cep.label(class="form-label") }}
+            {{ address_form.cep(class="form-control", id="inputCep", placeholder="CEP") }}
+        </div>
+        <div class="inpt-field col-md-8">
+            {{ address_form.street.label(class="form-label") }}
+            {{ address_form.street(class="form-control", id="inputStreet", placeholder="Street") }}
+        </div>
+        <div class="inpt-field col-md-4">
+            {{ address_form.number.label(class="form-label") }}
+            {{ address_form.number(class="form-control", id="inputNumber", placeholder="Number") }}
+        </div>
+        <div class="inpt-field col-md-12">
+            {{ address_form.city.label(class="form-label") }}
+            {{ address_form.city(class="form-control", id="inputNumber", placeholder="City") }}
+        </div>
+        <div class="inpt-field col-md-12">
+            {{ address_form.complement.label(class="form-label") }}
+            {{ address_form.complement(class="form-control", id="inputComplement", placeholder="Complement") }}
+        </div>
+        <div class="border-top my-3" style="width: 100%;"></div>
+        <div class="col-md-12" id="submit-field" style="text-align: right">
+            {{ address_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    <div class="border-top my-3" style="width: 100%;"></div>
+
+    <div class="adresses-owners d-flex flex-wrap">
+        {% for address in current_user.adresses %}
+        <div class="card" style="width: 100%; margin-bottom: 20px;">
+            <div class="card-body">
+                <h5 class="card-title">{{ address.cep }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ address.city }}</h6>
+                <p class="card-text">{{ address.street }} - {{ address.number }}</p>
+                <a href="#" class="card-link">Edit</a>
+                <a href="#" class="card-link text-danger">Remove</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
