@@ -37,6 +37,7 @@ class AddressForm(FlaskForm):
     number = IntegerField(label="Number", validators=[DataRequired()])
     city = StringField(label="City", validators=[DataRequired()])
     complement = StringField(label="Complement", validators=[Optional()])
+    submit = SubmitField(label="Add Address")
 
 
 class ProfileForm(FlaskForm):

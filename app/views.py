@@ -58,10 +58,13 @@ def profile_page():
         else:
             flash("Changes were made sucefully", category="success")
 
+    if address_form.validate_on_submit():
+        pass
+
     if profile_form.errors != {}:
         for errors in profile_form.errors.values():
             for msg in errors:
                 flash(msg, category="danger")
 
-    return render_template("profile.html", profile_form=profile_form)
+    return render_template("profile.html", profile_form=profile_form, address_form=address_form)
 
