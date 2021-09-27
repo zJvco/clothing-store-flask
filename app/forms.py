@@ -41,8 +41,10 @@ class AddressForm(FlaskForm):
 
 class ProfileForm(FlaskForm):
     username = StringField(label="Username", validators=[Length(min=4, max=50), DataRequired()])
-    email = StringField(label="Email", validators=[Email(), DataRequired()])
-    password = PasswordField(label="Password", validators=[Length(min=6, max=128), DataRequired()])
+    email = StringField(label="Email")
+    current_password = PasswordField(label="Current Password")
+    password_new = PasswordField(label="Password", validators=[Length(min=6, max=128), Optional()])
+    password_confirm = PasswordField(label="Confirm Password", validators=[EqualTo("password_new")])
     gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('undefined', 'Undefined')])
     phone = IntegerField(label="Number Phone", validators=[Optional()])
     submit = SubmitField(label="Save Changes")

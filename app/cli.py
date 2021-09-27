@@ -25,7 +25,7 @@ def drop_db():
 @with_appcontext
 def create_user(username, email, password):
     try:
-        user = User(username, email, password)
+        user = User(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
     except SQLAlchemyError:

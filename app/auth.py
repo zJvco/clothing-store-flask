@@ -21,11 +21,8 @@ def signin_page():
     form = SigninForm()
 
     if form.validate_on_submit():
-        email = form.email.data
-        password = form.password.data
-
-        user = User.query.filter_by(email=email).first()
-        if user and user.verify_password(password):
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.verify_password(form.password.data):
             login_user(user)
             flash("You are logged", category="success")
             return redirect(url_for("views.home_page"))
@@ -48,9 +45,7 @@ def signup_page():
     form = SignupForm()
 
     if form.validate_on_submit():
-        new_user = User(form.username.data, form.email.data, form.password.data)
-        new_user.phone = form.phone.data
-        new_user.gender = form.gender.data
+        new_user = User(username=form.username.data, email=form.email.data, password=form.password.data, phone=form.phone.data, gender=form.gender.data)
         db.session.add(new_user)
         db.session.commit()
         flash("You are registred now", category="success")

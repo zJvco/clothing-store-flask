@@ -30,25 +30,36 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False, unique=True)
-    password = db.Column(db.String(128), nullable=False)
-    phone = db.Column(db.Integer, unique=True)
-    money = db.Column(db.Float, nullable=False, default=0)
-    admin = db.Column(db.Boolean, default=False)
-    image = db.Column(db.String(240), default=random_choice_image("./app/static/img/profile/default"))
-    gender = db.Column(db.String(20), default="undefined".title(), nullable=False)
-    created_date = db.Column(db.DateTime(timezone=True), default=func.now())
-    updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
+    id = db.Column("id", db.Integer, primary_key=True)
+    username = db.Column("username", db.String(50), nullable=False)
+    email = db.Column("email", db.String(50), nullable=False, unique=True)
+    __password = db.Column("password", db.String(128), nullable=False)
+    phone = db.Column("phone", db.Integer, unique=True)
+    __money = db.Column("money", db.Float, nullable=False, default=0)
+    admin = db.Column("admin", db.Boolean, default=False)
+    image = db.Column("image", db.String(240), default=random_choice_image("./app/static/img/profile/default"))
+    gender = db.Column("gender", db.String(20), default="undefined".title(), nullable=False)
+    created_date = db.Column("created_date", db.DateTime(timezone=True), default=func.now())
+    updated_date = db.Column("updated_date", db.DateTime(timezone=True), onupdate=func.now())
 
     products = db.relationship("Product", secondary=users_has_products, backref=db.backref("owner_users", lazy="dynamic"))
     adresses = db.relationship("Address", backref=db.backref("owner_user"))
 
-    def __init__(self, username, email, password):
-        self.username = username
-        self.email = email
-        self.password = bcrypt.generate_password_hash(password).decode("utf-8")
+    @property
+    def password(self):
+        return self.__password
+
+    @password.setter
+    def password(self, pwd):
+        self.__password = bcrypt.generate_password_hash(pwd).decode("utf-8")
+
+    @property
+    def money(self):
+        return self.__money
+
+    @money.setter
+    def money(self, value):
+        self.__money = value
 
     def verify_password(self, pwd):
         return bcrypt.check_password_hash(self.password, pwd)
@@ -60,19 +71,13 @@ class User(db.Model, UserMixin):
 class Product(db.Model):
     __tablename__ = "products"
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(45), unique=True, nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.Text(1000))
-    image = db.Column(db.String(240))
-    created_date = db.Column(db.DateTime(timezone=True), default=func.now())
-    updated_date = db.Column(db.DateTime(timezone=True), onupdate=func.now())
-
-    def __init__(self, name, price, description, image):
-        self.name = name
-        self.price = price
-        self.description = description
-        self.image = image
+    id = db.Column("id", db.Integer, primary_key=True)
+    name = db.Column("name", db.String(45), unique=True, nullable=False)
+    price = db.Column("price", db.Float, nullable=False)
+    description = db.Column("description", db.Text(1000))
+    image = db.Column("image", db.String(240))
+    created_date = db.Column("created_date", db.DateTime(timezone=True), default=func.now())
+    updated_date = db.Column("updated_date", db.DateTime(timezone=True), onupdate=func.now())
 
     def __repr__(self):
         return "<Product %r>" % self.id
@@ -81,22 +86,14 @@ class Product(db.Model):
 class Address(db.Model):
     __tablename__ = "adresses"
 
-    id = db.Column(db.Integer, primary_key=True)
-    cep = db.Column(db.Integer, nullable=False)
-    street = db.Column(db.String(200), nullable=False)
-    number = db.Column(db.Integer, nullable=False)
-    city = db.Column(db.String(100), nullable=False)
-    complement = db.Column(db.Text(500))
+    id = db.Column("id", db.Integer, primary_key=True)
+    cep = db.Column("cep", db.Integer, nullable=False)
+    street = db.Column("street", db.String(200), nullable=False)
+    number = db.Column("number", db.Integer, nullable=False)
+    city = db.Column("city", db.String(100), nullable=False)
+    complement = db.Column("complement", db.Text(500))
 
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
-
-    def __init__(self, cep, street, number, city, complement, user_id):
-        self.cep = cep
-        self.street = street
-        self.number = number
-        self.city = city
-        self.complement = complement
-        self.user_id = user_id
+    user_id = db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
 
     def __repr__(self):
         return "<Address %r>" % self.id
