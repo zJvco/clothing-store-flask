@@ -39,7 +39,6 @@ def profile_page():
         if profile_form.current_password.data:
             if user.verify_password(profile_form.current_password.data):
                 if profile_form.password_new.data:
-                    print(profile_form.password_new.data)
                     user.password = profile_form.password_new.data
                 else:
                     flash("You need to fill the new password field", category="warning")
@@ -87,20 +86,17 @@ def profile_address_page():
 @login_required
 def profile_address_edit_page(id):
     edit_address_form = EditAddressForm()
+    address = Address.query.filter_by(id=id).first()
 
     if edit_address_form.validate_on_submit():
-        address = Address.query.filter_by(id=id).first()
-        if address.user_id == current_user.id:
-            address.cep = request.form.get("cep")
-            address.street = request.form.get("street")
-            address.number = request.form.get("number")
-            address.city = request.form.get("city")
-            address.complement = request.form.get("complement")
-            db.session.commit()
-            flash("Address changed successfully", category="success")
-            return redirect(url_for("views.profile_address_page"))
-        else:
-            abort(401)
+        address.cep = request.form.get("cep")
+        address.street = request.form.get("street")
+        address.number = request.form.get("number")
+        address.city = request.form.get("city")
+        address.complement = request.form.get("complement")
+        db.session.commit()
+        flash("Address changed successfully", category="success")
+        return redirect(url_for("views.profile_address_page"))
 
     if edit_address_form.errors != {}:
         for errors in edit_address_form.errors.values():
@@ -108,3 +104,10 @@ def profile_address_edit_page(id):
                 flash(msg, category="danger")
 
     return redirect(url_for("views.profile_address_page"))
+
+@views.route("/profile/address/remove/<id>")
+@login_required
+def profile_address_remove_page(id):
+    address = Address.query.filter_by(id=id).first()
+    db.session.delete(address)
+    db.session.commit()

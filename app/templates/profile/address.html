@@ -32,6 +32,7 @@
     <div class="border-top my-3" style="width: 100%;"></div>
     <h4 style="margin: 25px 0;">My Addresses</h4>
     <div class="adresses-owners d-flex flex-wrap">
+        {% if current_user.adresses %}
         {% for address in current_user.adresses %}
         <div class="card" style="width: 100%; margin-bottom: 20px;">
             <div class="card-body">
@@ -39,7 +40,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{ address.city }}</h6>
                 <p class="card-text">{{ address.street }} - {{ address.number }}</p>
                 <a href="#" class="card-link" data-toggle="modal" data-target="#editAddressModal-{{ address.id }}">Edit</a>
-                <a href="#" class="card-link text-danger">Remove</a>
+                <a href="#" class="card-link text-danger" id="remove-address" data-id="{{ address.id }}">Remove</a>
             </div>
         </div>
         <div class="modal fade" id="editAddressModal-{{ address.id }}" tabindex="-1" role="dialog" aria-labelledby="editAddressModalTitle" aria-hidden="true">
@@ -84,6 +85,26 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <div class="alert alert-warning text-center" style="width: 100%;" role="alert">
+            Your account don't have adresses registred
+        </div>
+        {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const rm_btn = document.querySelectorAll("#remove-address")
+
+    rm_btn.forEach(i => {
+        i.addEventListener("click", async (e) => {
+            e.preventDefault()
+            id = i.dataset.id
+            await fetch(`${window.location.href}/remove/${id}`)
+                .then(resp => window.location.reload())
+        })
+    })
+</script>
 {% endblock %}
