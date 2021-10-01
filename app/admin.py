@@ -2,8 +2,8 @@ from flask import redirect, url_for
 from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
-from wtforms import RadioField
-from wtforms.validators import DataRequired
+from wtforms import RadioField, PasswordField
+from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
 from . import adm, db
@@ -25,7 +25,7 @@ class IndexAdmin(AdminIndexView):
 
 class UserAdmin(ModelView):
     form_excluded_columns = ["created_date", "updated_date", "products", "adresses"]
-    column_exclude_list = ["password", "phone", "money", "image"]
+    column_exclude_list = ["password_hash", "phone", "money", "image"]
     column_searchable_list = ["email"]
 
     form_widget_args = {
@@ -35,13 +35,14 @@ class UserAdmin(ModelView):
     }
 
     def on_model_change(self, form, model, is_created):
-        if type(form.image.data) is str:
+        if type(form.image.data) is str or form.image.data is None:
             return
 
         model.image = form.image.data.filename
 
     def scaffold_form(self):
         form = super().scaffold_form()
+        form.password_hash = PasswordField(label="Password", validators=[Length(min=6, max=128), DataRequired()])
         form.gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('undefined', 'Undefined')])
         form.image = FileField(label="Image", validators=[FileAllowed(["jpg", "png"], "You can upload only images")])
         return form

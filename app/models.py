@@ -33,9 +33,9 @@ class User(db.Model, UserMixin):
     id = db.Column("id", db.Integer, primary_key=True)
     username = db.Column("username", db.String(50), nullable=False)
     email = db.Column("email", db.String(50), nullable=False, unique=True)
-    __password = db.Column("password", db.String(128), nullable=False)
+    password_hash = db.Column("password", db.String(128), nullable=False)
     phone = db.Column("phone", db.Integer, unique=True)
-    __money = db.Column("money", db.Float, nullable=False, default=0)
+    money = db.Column("money", db.Float, nullable=False, default=0)
     admin = db.Column("admin", db.Boolean, default=False)
     image = db.Column("image", db.String(240), default=random_choice_image("./app/static/img/profile/default"))
     gender = db.Column("gender", db.String(20), default="undefined".title(), nullable=False)
@@ -47,19 +47,11 @@ class User(db.Model, UserMixin):
 
     @property
     def password(self):
-        return self.__password
+        return self.password_hash
 
     @password.setter
     def password(self, pwd):
-        self.__password = bcrypt.generate_password_hash(pwd).decode("utf-8")
-
-    @property
-    def money(self):
-        return self.__money
-
-    @money.setter
-    def money(self, value):
-        self.__money = value
+        self.password_hash = bcrypt.generate_password_hash(pwd).decode("utf-8")
 
     def verify_password(self, pwd):
         return bcrypt.check_password_hash(self.password, pwd)
