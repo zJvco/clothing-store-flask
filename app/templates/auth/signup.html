@@ -11,8 +11,8 @@ Sign up
 {% block content %}
 <div class="container">
     <h1>Sign up</h1>
-    <p>Already have an account? Please, <a href="{{ url_for('auth.signin_page') }}">Sign in</a> now.</p>
-    <form class="row g-3" method="POST">
+    <p>Already have an account? <a href="{{ url_for('auth.signin_page') }}">Sign in</a></p>
+    <form class="row g-3" method="POST" novalidate>
         {{ form.hidden_tag() }}
         <div class="inpt-field col-12">
             {{ form.username.label(class="form-label") }}

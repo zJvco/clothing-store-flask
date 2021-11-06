@@ -89,11 +89,11 @@ def profile_address_edit_page(id):
     address = Address.query.filter_by(id=id).first()
 
     if edit_address_form.validate_on_submit():
-        address.cep = request.form.get("cep")
-        address.street = request.form.get("street")
-        address.number = request.form.get("number")
-        address.city = request.form.get("city")
-        address.complement = request.form.get("complement")
+        address.cep = edit_address_form.cep.data
+        address.street = edit_address_form.street.data
+        address.number = edit_address_form.number.data
+        address.city = edit_address_form.city.data
+        address.complement = edit_address_form.complement.data
         db.session.commit()
         flash("Address changed successfully", category="success")
         return redirect(url_for("views.profile_address_page"))

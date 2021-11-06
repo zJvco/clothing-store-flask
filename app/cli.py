@@ -1,4 +1,4 @@
-import click
+import click, os
 from time import sleep
 from flask.cli import with_appcontext
 from sqlalchemy.exc import SQLAlchemyError
@@ -14,7 +14,9 @@ def create_db():
 
 
 @click.command("drop_db")
+@with_appcontext
 def drop_db():
+    os.system("rm -r app/store.db")
     db.drop_all()
 
 
