@@ -1,0 +1,11 @@
+.top-search-category {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+}
+
+.top-search-category form {
+    margin: 0 25px;
+}

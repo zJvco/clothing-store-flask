@@ -1,4 +1,4 @@
-import click, os
+import click
 from time import sleep
 from flask.cli import with_appcontext
 from sqlalchemy.exc import SQLAlchemyError
@@ -16,7 +16,6 @@ def create_db():
 @click.command("drop_db")
 @with_appcontext
 def drop_db():
-    os.system("rm -r app/store.db")
     db.drop_all()
 
 
@@ -26,6 +25,10 @@ def drop_db():
 @click.option("--password", "-p")
 @with_appcontext
 def create_user(username, email, password):
+    if not username or not email or not password:
+        print("Usage: -u [username] -e [email] -p [password]")
+        return
+
     try:
         user = User(username=username, email=email, password=password)
         db.session.add(user)

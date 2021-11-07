@@ -27,7 +27,7 @@ def signin_page():
             flash("You are logged", category="success")
             return redirect(url_for("views.home_page"))
         else:
-            flash("Email or password is invalid, please, try again", category="warning")
+            flash("Email or password invalid", category="warning")
 
     if form.errors != {}:
         for errors in form.errors.values():

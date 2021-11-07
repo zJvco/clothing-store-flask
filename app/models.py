@@ -4,13 +4,12 @@ from sqlalchemy.sql import func
 from .utils import random_choice_image
 from . import db, bcrypt, login_manager
 
-orders_details = db.Table("orders_details",
-    db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
-    db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
-    db.Column("quantity", db.Integer, nullable=False),
-    db.Column("unit_price", db.Integer, nullable=False)
-)
-
+# orders_details = db.Table("orders_details",
+#     db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
+#     db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
+#     db.Column("quantity", db.Integer, nullable=False),
+#     db.Column("unit_price", db.Integer, nullable=False)
+# )
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -59,7 +58,7 @@ class Product(db.Model):
     price = db.Column("price", db.Float, nullable=False)
     description = db.Column("description", db.Text(1000))
     image = db.Column("image", db.String(240))
-    stock = db.Column("stock", db.Integer)
+    quantity = db.Column("quantity", db.Integer)
     created_date = db.Column("created_date", db.DateTime(timezone=True), default=func.now())
     updated_date = db.Column("updated_date", db.DateTime(timezone=True), onupdate=func.now())
 
@@ -89,6 +88,19 @@ class Address(db.Model):
         return "<Address %r>" % self.id
 
 
+class OrderDetail:
+    __tablename__ = "orders_details"
+
+    id = db.Column("id", db.Integer, primary_key=True)
+    order_id = db.Column("order_id", db.Integer, db.ForeignKey("orders.id"), primary_key=True)
+    product_id = db.Column("product_id", db.Integer, db.ForeignKey("products.id"), primary_key=True)
+    quantity = db.Column("quantity", db.Integer, nullable=False)
+    unit_price = db.Column("unit_price", db.Integer, nullable=False)
+
+    def __repr__(self):
+        return "<OrderDetail %r>" % self.id
+
+
 class Order(db.Model):
     __tablename__ = "orders"
 
@@ -96,8 +108,7 @@ class Order(db.Model):
     user_id = db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
     order_date = db.Column("order_date", db.DateTime(timezone=True), default=func.now())
 
-    products = db.relationship("Product", secondary=orders_details, backref=db.backref("owners_orders", lazy="dynamic"))
+    # products = db.relationship("Product", secondary="orders_details", backref=db.backref("owners_orders", lazy="dynamic"))
 
     def __repr__(self):
         return "<Order %r>" % self.id
-

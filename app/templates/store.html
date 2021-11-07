@@ -1,25 +1,54 @@
 {% extends "base.html" %}
 
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/store.css') }}">
+{% endblock %}
+
 {% block title %}
-Products
+Store
 {% endblock %}
 
 {% block content %}
-{% if products %}
-<div class="container d-flex flex-wrap">
-{% for product in products %}
-    <div class="card mx-auto" style="width: 18rem; margin: 20px 0;">
-        <img class="card-img-top" src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
-        <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-        </div>
-        <div class="card-footer">
-            <a href="#" class="btn btn-primary">Purchase</a>
-            <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
+
+<div class="top-search-category">
+    <div class="btn-group">
+        <button class="btn btn-sm dropdown-toggle text-muted" type="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Categories
+        </button>
+        <div class="dropdown-menu">
+            {% if categories %}
+                {% for category in categories %}
+                <a class="dropdown-item small text-muted" href="{{ url_for('views.store_page') }}/{{ category.name }}">{{ category.name.title() }}</a>
+                {% endfor %}
+            {% else %}
+            <a class="dropdown-item small text-muted" href="#">Empty</a>
+            {% endif %}
         </div>
     </div>
-{% endfor %}
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+
+{% if products %}
+<div class="container">
+    <div class="card-container d-flex flex-wrap">
+        {% for product in products %}
+        <div class="card mx-auto" style="width: 18rem; margin: 20px 0;">
+            <img class="card-img-top" src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-primary">Purchase</a>
+                <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% else %}
 <div class="alert alert-warning text-center" role="alert">

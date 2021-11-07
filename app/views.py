@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from . import db
-from .models import User, Product, Address
+from .models import User, Product, Address, Order, OrderDetail, Category
 from .forms import ProfileForm, AddressForm, EditAddressForm
 
 views = Blueprint("views", __name__)
@@ -21,7 +21,21 @@ def home_page():
 @views.route("/store")
 def store_page():
     products = Product.query.all()
-    return render_template("store.html", products=products)
+    categories = Category.query.all()
+    return render_template("store.html", products=products, categories=categories)
+
+
+@views.route("/store/<category>")
+def store_category_page(category):
+    products = db.session.query(Product).join(Category).filter(Category.name == category.lower()).all()
+    categories = Category.query.all()
+    
+    return render_template("store.html", products=products, categories=categories)
+
+
+@views.route("/store/<category>/<product>")
+def store_product_page():
+    return
 
 
 @views.route("/profile", methods=["GET", "POST"])
