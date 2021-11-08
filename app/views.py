@@ -29,25 +29,35 @@ def store_page():
 def store_category_page(category):
     products = db.session.query(Product).join(Category).filter(Category.name == category.lower()).all()
     categories = Category.query.all()
-    
     return render_template("store.html", products=products, categories=categories)
 
 
 @views.route("/store/<category>/<product_name>/")
 def store_product_page(category, product_name):
     product = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.name == product_name.lower()).first()
+    products_by_category = db.session.query(Product).join(Category).filter(Category.name == category.lower()).limit(20).all()
+    other_category_products = db.session.query(Product).join(Category).filter(Category.name != category.lower()).limit(20).all()
 
     if not product:
         flash("Product not found", "warning")
         return redirect(url_for("views.store_page"))
-
-    return render_template("product.html", product=product)
+        
+    return render_template("product.html", product=product, products_by_category=products_by_category, other_category_products=other_category_products)
 
 
 @views.route("/cart/")
 @login_required
 def cart_page():
     return render_template("cart.html")
+
+
+@views.route("/buy")
+@login_required
+def buy_page():
+    if request.method == "POST":
+        pass
+    else:
+        pass
 
 
 @views.route("/profile/", methods=["GET", "POST"])

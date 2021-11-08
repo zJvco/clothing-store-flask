@@ -48,13 +48,12 @@
             {{ profile_form.password_confirm.label(class="form-label") }}
             {{ profile_form.password_confirm(class="form-control", id="inputOldConfirmPassword", placeholder="Confirm Password", readonly="true", disabled="true") }}
         </div>
-        <div class="border-top my-3" style="width: 100%;"></div>
-        <div class="col-md-12" id="submit-field" style="text-align: right; display: none;">
+        <div class="col-md-12" id="submit-field" style="text-align: right; display: none; margin: 10px 0;">
             {{ profile_form.submit(class="btn btn-primary") }}
             <button type="button" id="cancel-edit" class="btn btn-danger">Cancel</button>
         </div>
     </form>
-    <button class="btn btn-primary" id="edit-user" style="float: right;">Edit</button>
+    <button class="btn btn-primary" id="edit-user" style="float: right; margin: 10px 0;">Edit</button>
 </div>
 {% endblock %}
 

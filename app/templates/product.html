@@ -10,26 +10,88 @@
 
 {% block content %}
 <div class="container">
-    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
-    <div class="product-content">
-        <a class="small text-muted" href="{{ url_for('views.store_category_page', category=product.category.name) }}">category > {{ product.category.name }}</a>
-        <h3>{{ product.name.title() }}</h3>
-        <span class="text-success product-price">${{ product.price }}</span>
-        <p>{{ product.description.title() }}</p>
-        <div class="buy-product">
-            <button type="button" class="btn btn-primary">Buy</button>
-            <button type="button" class="btn btn-light" id="add-to-cart">
-                <i style="margin-right: 5px;" class="fas fa-shopping-cart"></i>
-                Add to cart
-            </button>
+    <div class="product-container">
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+        <div class="product-content">
+            <a class="small text-muted category-link"
+                href="{{ url_for('views.store_category_page', category=product.category.name) }}">category > {{
+                product.category.name }}</a>
+            <h3>{{ product.name.title() }}</h3>
+            <span class="text-success product-price">${{ product.price }}</span>
+            <p>{{ product.description.title() }}</p>
+            <div class="buy-product">
+                <button type="button" class="btn btn-primary">Buy</button>
+                <button type="button" class="btn btn-light" id="add-to-cart">
+                    <i style="margin-right: 5px;" class="fas fa-shopping-cart"></i>
+                    Add to cart
+                </button>
+            </div>
+            <div class="back-link">
+                <a href="{{ url_for('views.store_page') }}">Back to store</a>
+            </div>
         </div>
-        <div class="back-link">
-            <a href="{{ url_for('views.store_page') }}">Back to store</a>
+    </div>
+
+    <div class="products-items-container">
+        <h3>More {{ product.category.name }}'s products</h3>
+        {% if products_by_category %}
+        <div class="carousel">
+            {% for product in products_by_category %}
+            <div class="carousel-card">
+                <a href="{{ url_for('views.store_product_page', category=product.category.name, product_name=product.name) }}">
+                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                </a>
+            </div>
+            {% endfor %}
         </div>
+        {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            The store not already have {{ product.category.name }}'s products
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="products-items-container">
+        <h3>Other products</h3>
+        {% if other_category_products %}
+        <div class="carousel">
+            {% for product in other_category_products %}
+            <div class="carousel-card">
+                <a href="{{ url_for('views.store_product_page', category=product.category.name, product_name=product.name) }}">
+                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            The store not already have other products
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/owl.carousel.js') }}"></script>
+<script>
+    $('.carousel').owlCarousel({
+        margin: 15,
+        autoWidth: true,
+        dots: false,
+        nav: false,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    });
+</script>
 {% endblock %}
