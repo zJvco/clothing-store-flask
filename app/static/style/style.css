@@ -9,6 +9,25 @@
     margin: 10px 25px;
 }
 
+.cart {
+    position: relative;
+}
+
+.cart-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background-color: #007bff;
+    font-size: 9px;
+    color: #fff;
+}
+
 /* Carousel home page */
 .carousel-item img {
     max-height: 800px;

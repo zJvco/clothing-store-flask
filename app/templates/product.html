@@ -18,7 +18,7 @@
         <p>{{ product.description.title() }}</p>
         <div class="buy-product">
             <button type="button" class="btn btn-primary">Buy</button>
-            <button type="button" class="btn btn-light">
+            <button type="button" class="btn btn-light" id="add-to-cart">
                 <i style="margin-right: 5px;" class="fas fa-shopping-cart"></i>
                 Add to cart
             </button>
@@ -28,4 +28,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block form_content %}
 <div id="user-form" class="user-form">
-    <form class="row g-3" method="POST">
+    <form class="row g-3" method="POST" novalidate>
         {{ profile_form.hidden_tag() }}
         <div class="inpt-field col-12">
             {{ profile_form.username.label(class="form-label") }}

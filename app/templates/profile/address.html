@@ -2,7 +2,7 @@
 
 {% block form_content %}
 <div id="address-form" class="address-form">
-    <form class="row g-3" method="POST">
+    <form class="row g-3" method="POST" novalidate>
         {{ address_form.hidden_tag() }}
         <div class="inpt-field col-12">
             {{ address_form.cep.label(class="form-label") }}
@@ -53,7 +53,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ url_for(request.endpoint) }}/edit/{{ address.id }}" class="row g-3" method="POST">
+                        <form action="{{ url_for(request.endpoint) }}/edit/{{ address.id }}" class="row g-3" method="POST" novalidate>
                             {{ edit_address_form.hidden_tag() }}
                             <div class="inpt-field col-12">
                                 {{ edit_address_form.cep.label(class="form-label") }}

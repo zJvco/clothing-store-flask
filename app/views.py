@@ -44,6 +44,12 @@ def store_product_page(category, product_name):
     return render_template("product.html", product=product)
 
 
+@views.route("/cart/")
+@login_required
+def cart_page():
+    return render_template("cart.html")
+
+
 @views.route("/profile/", methods=["GET", "POST"])
 @login_required
 def profile_page():

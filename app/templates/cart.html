@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/cart.css') }}">
+{% endblock %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block content %}
+<div class="cart-container d-flex">
+    <div class="shopping-cart w-100">
+        <h3>Shopping Cart</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>PRODUCT DETAILS</th>
+                    <th>QUANTITY</th>
+                    <th>PRICE</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="product-details">
+                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
+                        <div class="pd-row">
+                            <h5>Nome do Produto</h5>
+                            <p><span class="text-muted">Category: </span>Shoe</p>
+                            <p><span class="text-muted">Product Code: </span>12</p>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="quantity" id="quantity" min="1" max="100">
+                    </td>
+                    <td class="text-success">$100</td>
+                    <td class="text-success">$200</td>
+                </tr>
+                <tr>
+                    <td class="product-details">
+                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
+                        <div class="pd-row">
+                            <h5>Nome do Produto</h5>
+                            <p><span class="text-muted">Category: </span>Shoe</p>
+                            <p><span class="text-muted">Product Code: </span>12</p>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="quantity" id="quantity" min="1" max="100">
+                    </td>
+                    <td class="text-success">$100</td>
+                    <td class="text-success">$200</td>
+                </tr>
+                <tr>
+                    <td class="product-details">
+                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
+                        <div class="pd-row">
+                            <h5>Nome do Produto</h5>
+                            <p><span class="text-muted">Category: </span>Shoe</p>
+                            <p><span class="text-muted">Product Code: </span>12</p>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="quantity" id="quantity" min="1" max="100">
+                    </td>
+                    <td class="text-success">$100</td>
+                    <td class="text-success">$200</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="order-summary">
+        <div class="order-summary-header">
+            <h4>ORDER SUMMARY</h4>
+        </div>
+        <div class="order-summary-body">
+            <p>ITEMS 2<span>$200</span></p>
+            <p>SHIPPING<span>No one</span></p>
+        </div>
+        <div class="order-summary-footer">
+            <p>TOTAL COST<span>$100</span></p>
+            <button class="btn btn-dark w-100">CHECKOUT</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

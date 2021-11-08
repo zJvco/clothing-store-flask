@@ -43,7 +43,7 @@ Store
                 <p class="card-text">{{ product.description }}</p>
             </div>
             <div class="card-footer">
-                <a href="#" class="btn btn-primary">Purchase</a>
+                <a href="{{ url_for('views.store_product_page', category=product.category.name, product_name=product.name) }}" class="btn btn-primary">Purchase</a>
                 <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
             </div>
         </div>
