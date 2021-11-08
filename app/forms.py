@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, PasswordField, RadioField
-from wtforms.validators import Length, Email, DataRequired, EqualTo, Optional, ValidationError
+from wtforms.validators import Length, Email, DataRequired, EqualTo, NumberRange, Optional, ValidationError
 
 from .models import User
 
@@ -53,3 +53,8 @@ class ProfileForm(FlaskForm):
     gender = RadioField(label="Gender", validators=[DataRequired()], choices=[('male', 'Male'), ('female', 'Female'), ('undefined', 'Undefined')])
     phone = IntegerField(label="Number Phone", validators=[Optional()])
     submit = SubmitField(label="Save Changes")
+
+
+class DepositForm(FlaskForm):
+    value = IntegerField(label="Value", validators=[DataRequired(), NumberRange(min=10, max=10000)])
+    submit = SubmitField(label="Deposit")

@@ -17,10 +17,13 @@ Profile
     <div class="col profile-content">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a id="tab-link-profile" class="nav-link {% if url_for(request.endpoint) == '/profile' %}active{% endif %}" aria-current="page" href="{{ url_for('views.profile_page') }}">Profile</a>
+                <a id="tab-link-profile" class="nav-link {% if url_for(request.endpoint) == '/profile/' %}active{% endif %}" aria-current="page" href="{{ url_for('views.profile_page') }}">Profile</a>
             </li>
             <li class="nav-item">
-                <a id="tab-link-adresses" class="nav-link {% if url_for(request.endpoint) == '/profile/address' %}active{% endif %}" href="{{ url_for('views.profile_address_page') }}">Adresses</a>
+                <a id="tab-link-adresses" class="nav-link {% if url_for(request.endpoint) == '/profile/address/' %}active{% endif %}" href="{{ url_for('views.profile_address_page') }}">Adresses</a>
+            </li>
+            <li class="nav-item">
+                <a id="tab-link-adresses" class="nav-link {% if url_for(request.endpoint) == '/profile/deposit/' %}active{% endif %}" href="{{ url_for('views.profile_deposit_page') }}">Deposit</a>
             </li>
         </ul>
         

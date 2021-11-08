@@ -1,0 +1,19 @@
+{% extends "profile/base.html" %}
+
+{% block form_content %}
+<div id="user-form" class="user-form">
+    <form class="row g-3" method="POST" novalidate>
+        {{ deposit_form.hidden_tag() }}
+        <div class="inpt-field col-12">
+            {{ deposit_form.value.label(class="form-label") }}
+            {{ deposit_form.value(class="form-control", id="deposit-value", placeholder="Value") }}
+        </div>
+        <div class="col-md-12" id="submit-field">
+            {{ deposit_form.submit(class="btn btn-primary w-100") }}
+        </div>
+    </form>
+    <div class="current-cash text-center" style="margin: 12px 0;">
+        <span class="small text-muted">Current cash: ${{ current_user.money }}</span>
+    </div>
+</div>
+{% endblock %}

@@ -1,14 +1,14 @@
 .product-container {
     display: flex;
-    border-bottom: 1px solid #ccc;
 }
 
 .product-container img {
     display: flex;
     width: 100%;
     max-width: 550px;
-    max-height: 370px;
+    height: 370px;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .product-content {
@@ -18,6 +18,25 @@
 
 .product-price {
     font-size: 1.2rem;
+}
+
+.quantity-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
+
+.quantity-row input {
+    margin: 0 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    text-align: center;
+    max-width: 40px;
+}
+
+.stock-row {
+    font-size: 0.9rem;
 }
 
 .buy-product {
@@ -33,7 +52,7 @@
 }
 
 .back-link {
-    margin: 10px 0;
+    margin: 25px 0;
     text-align: center;
 }
 
@@ -49,8 +68,10 @@
 }
 
 .carousel-card img {
-    max-width: 150px;
+    width: 160px;
+    height: 160px;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .carousel .owl-stage {

@@ -6,11 +6,19 @@
     margin-bottom: 15px;
 }
 
+.top-search-category {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .top-search-category form {
+    display: flex;
+    flex-wrap: nowrap;
     margin: 0 25px;
 }
 
-.card-body {
-    overflow: auto;
-    max-height: 235px;
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

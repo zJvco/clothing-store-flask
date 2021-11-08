@@ -1,10 +1,10 @@
-from flask import Blueprint, flash, abort, request
+from flask import Blueprint, flash, abort, request, json
 from flask import render_template, redirect, url_for
 from flask_login import login_required, current_user
 
 from . import db
 from .models import User, Product, Address, Order, OrderDetail, Category
-from .forms import ProfileForm, AddressForm, EditAddressForm
+from .forms import ProfileForm, AddressForm, EditAddressForm, DepositForm
 
 views = Blueprint("views", __name__)
 
@@ -42,7 +42,9 @@ def store_product_page(category, product_name):
         flash("Product not found", "warning")
         return redirect(url_for("views.store_page"))
         
-    return render_template("product.html", product=product, products_by_category=products_by_category, other_category_products=other_category_products)
+    return render_template("product.html", product=product,
+                                           products_by_category=products_by_category,
+                                           other_category_products=other_category_products)
 
 
 @views.route("/cart/")
@@ -51,13 +53,19 @@ def cart_page():
     return render_template("cart.html")
 
 
-@views.route("/buy")
+@views.route("/buy/", methods=["POST"])
 @login_required
 def buy_page():
-    if request.method == "POST":
-        pass
-    else:
-        pass
+    params = json.loads(request.get_data())
+    
+    for param in params:
+        product_id = param["id"]
+        quantity = param["quantity"]
+    
+        product = Product.query.filter_by(id=product_id).first()
+        print(product.name)
+
+    return redirect(url_for("views.home_page"))
 
 
 @views.route("/profile/", methods=["GET", "POST"])
@@ -141,9 +149,32 @@ def profile_address_edit_page(id):
 
     return redirect(url_for("views.profile_address_page"))
 
+
 @views.route("/profile/address/remove/<id>/")
 @login_required
 def profile_address_remove_page(id):
     address = Address.query.filter_by(id=id).first()
     db.session.delete(address)
     db.session.commit()
+
+
+@views.route("/profile/deposit/", methods=["GET", "POST"])
+@login_required
+def profile_deposit_page():
+    deposit_form = DepositForm()
+
+    if request.method == "POST":
+        user = User.query.filter_by(id=current_user.id).first()
+        if deposit_form.validate_on_submit() and user:
+            user.money += deposit_form.value.data
+            db.session.commit()
+            flash("Amount successfully deposited", category="success")
+
+        if deposit_form.errors != {}:
+            for errors in deposit_form.errors.values():
+                for msg in errors:
+                    flash(msg, category="danger")
+                    
+        return redirect(request.url)
+    else:
+        return render_template("profile/deposit.html", deposit_form=deposit_form)

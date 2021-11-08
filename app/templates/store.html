@@ -39,12 +39,11 @@ Store
         <div class="card mx-auto" style="width: 18rem; margin: 20px 0;">
             <img class="card-img-top" src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
             <div class="card-body">
-                <h5 class="card-title">{{ product.name.title() }}</h5>
-                <p class="card-text">{{ product.description }}</p>
-            </div>
-            <div class="card-footer">
-                <a href="{{ url_for('views.store_product_page', category=product.category.name, product_name=product.name) }}" class="btn btn-primary">Purchase</a>
-                <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
+                <h5 class="card-title text-center">{{ product.name.title() }}</h5>
+                <div class="card-footer d-flex justify-content-between align-items-center" style="padding-bottom: 0;">
+                    <a href="{{ url_for('views.store_product_page', category=product.category.name, product_name=product.name) }}" class="btn btn-primary">Purchase</a>
+                    <span style="white-space: nowrap; margin-left: 15px;">${{ product.price }}</span>
+                </div>
             </div>
         </div>
         {% endfor %}

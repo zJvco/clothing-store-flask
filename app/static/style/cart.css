@@ -47,6 +47,7 @@ table th {
     border: 1px solid #ccc;
     outline: none;
     text-align: center;
+    font-size: 0.9rem;
 }
 
 /* Order Summary */
