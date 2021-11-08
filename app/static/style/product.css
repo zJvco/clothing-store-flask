@@ -1,0 +1,34 @@
+img {
+    max-width: 550px;
+    border-radius: 10px;
+}
+
+.container {
+    display: flex;
+}
+
+.product-content {
+    width: 100%;
+    margin: 0 25px;
+}
+
+.product-price {
+    font-size: 1.2rem;
+}
+
+.buy-product {
+    display: flex;
+}
+
+.buy-product button:first-child {
+    margin-right: 20px;
+}
+
+.buy-product button {
+    width: 100%;
+}
+
+.back-link {
+    margin: 10px 0;
+    text-align: center;
+}

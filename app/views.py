@@ -18,14 +18,14 @@ def home_page():
     return render_template("index.html")
 
 
-@views.route("/store")
+@views.route("/store/")
 def store_page():
     products = Product.query.all()
     categories = Category.query.all()
     return render_template("store.html", products=products, categories=categories)
 
 
-@views.route("/store/<category>")
+@views.route("/store/<category>/")
 def store_category_page(category):
     products = db.session.query(Product).join(Category).filter(Category.name == category.lower()).all()
     categories = Category.query.all()
@@ -33,12 +33,18 @@ def store_category_page(category):
     return render_template("store.html", products=products, categories=categories)
 
 
-@views.route("/store/<category>/<product>")
-def store_product_page():
-    return
+@views.route("/store/<category>/<product_name>/")
+def store_product_page(category, product_name):
+    product = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.name == product_name.lower()).first()
+
+    if not product:
+        flash("Product not found", "warning")
+        return redirect(url_for("views.store_page"))
+
+    return render_template("product.html", product=product)
 
 
-@views.route("/profile", methods=["GET", "POST"])
+@views.route("/profile/", methods=["GET", "POST"])
 @login_required
 def profile_page():
     profile_form = ProfileForm()
@@ -73,7 +79,7 @@ def profile_page():
     return render_template("profile/profile.html", profile_form=profile_form)
 
 
-@views.route("/profile/address", methods=["GET", "POST"])
+@views.route("/profile/address/", methods=["GET", "POST"])
 @login_required
 def profile_address_page():
     address_form = AddressForm()
@@ -96,7 +102,7 @@ def profile_address_page():
     return render_template("profile/address.html", address_form=address_form, edit_address_form=edit_address_form)
 
 
-@views.route("/profile/address/edit/<id>", methods=["GET", "POST"])
+@views.route("/profile/address/edit/<id>/", methods=["GET", "POST"])
 @login_required
 def profile_address_edit_page(id):
     edit_address_form = EditAddressForm()
@@ -119,7 +125,7 @@ def profile_address_edit_page(id):
 
     return redirect(url_for("views.profile_address_page"))
 
-@views.route("/profile/address/remove/<id>")
+@views.route("/profile/address/remove/<id>/")
 @login_required
 def profile_address_remove_page(id):
     address = Address.query.filter_by(id=id).first()

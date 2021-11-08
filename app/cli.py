@@ -43,6 +43,10 @@ def create_user(username, email, password):
 @click.option("-id", type=int)
 @with_appcontext
 def delete_user(id):
+    if not id:
+        print("Usage: -id [user id]")
+        return
+
     user = User.query.filter_by(id=id).first()
     if user:
         try:
@@ -60,6 +64,10 @@ def delete_user(id):
 @click.option("--email", "-e")
 @with_appcontext
 def make_admin(email):
+    if not email:
+        print("Usage: --email / -e [user email]")
+        return
+
     user = User.query.filter_by(email=email).first()
     if user:
         if user.admin:

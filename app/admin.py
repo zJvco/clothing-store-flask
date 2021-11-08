@@ -7,12 +7,13 @@ from wtforms.validators import DataRequired, Length
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
 from . import adm, db
-from .models import User, Product
+from .models import User, Product, Category
 
 
 def configure():
     adm.add_view(UserAdmin(User, db.session))
     adm.add_view(ProductsAdmin(Product, db.session))
+    adm.add_view(CategoryAdmin(Category, db.session))
 
 
 class IndexAdmin(AdminIndexView):
@@ -24,7 +25,7 @@ class IndexAdmin(AdminIndexView):
 
 
 class UserAdmin(ModelView):
-    form_excluded_columns = ["created_date", "updated_date", "products", "adresses"]
+    form_excluded_columns = ["created_date", "updated_date", "products", "adresses", "orders"]
     column_exclude_list = ["password_hash", "phone", "money", "image"]
     column_searchable_list = ["email"]
 
@@ -56,7 +57,7 @@ class UserAdmin(ModelView):
 
 class ProductsAdmin(ModelView):
     form_excluded_columns = ["created_date", "updated_date", "owner_users"]
-    column_exclude_list = ["image", "description"]
+    column_exclude_list = ["image", "description", "category"]
 
     def on_model_change(self, form, model, is_created):
         path = "/img"
@@ -72,3 +73,7 @@ class ProductsAdmin(ModelView):
 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for("admin.index"))
+
+
+class CategoryAdmin(ModelView):
+    pass

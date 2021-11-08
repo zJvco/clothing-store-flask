@@ -1,19 +1,30 @@
 {% extends "base.html" %}
 
+{% block csslinks %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style/product.css') }}">
+{% endblock %}
+
 {% block title %}
-{{ product.name }}
+{{ product.name.title() }}
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <img src="" alt="">
+    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
     <div class="product-content">
-        <h3>{{ product.name }}</h3>
-        <span>{{ product.price }}</span>
-        <p>{{ product.description }}</p>
+        <a class="small text-muted" href="{{ url_for('views.store_category_page', category=product.category.name) }}">category > {{ product.category.name }}</a>
+        <h3>{{ product.name.title() }}</h3>
+        <span class="text-success product-price">${{ product.price }}</span>
+        <p>{{ product.description.title() }}</p>
         <div class="buy-product">
             <button type="button" class="btn btn-primary">Buy</button>
-            <button type="button" class="btn btn-light">Add to cart</button>
+            <button type="button" class="btn btn-light">
+                <i style="margin-right: 5px;" class="fas fa-shopping-cart"></i>
+                Add to cart
+            </button>
+        </div>
+        <div class="back-link">
+            <a href="{{ url_for('views.store_page') }}">Back to store</a>
         </div>
     </div>
 </div>

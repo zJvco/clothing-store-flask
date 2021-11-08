@@ -72,6 +72,11 @@ class Category(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column("name", db.String(50), nullable=False)
 
+    products = db.relationship("Product", backref=db.backref("category"))
+
+    def __repr__(self):
+        return "<Category %r>" % self.name
+
 
 class Address(db.Model):
     __tablename__ = "adresses"

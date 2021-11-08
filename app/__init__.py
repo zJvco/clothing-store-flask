@@ -12,7 +12,7 @@ load_dotenv(find_dotenv())
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
-adm = Admin(name="Clothing Store", template_mode="bootstrap4")
+adm = Admin(name="Clothing Store Administration", template_mode="bootstrap4")
 migrate = Migrate(compare_type=True)
 
 

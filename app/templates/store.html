@@ -39,7 +39,7 @@ Store
         <div class="card mx-auto" style="width: 18rem; margin: 20px 0;">
             <img class="card-img-top" src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
             <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
+                <h5 class="card-title">{{ product.name.title() }}</h5>
                 <p class="card-text">{{ product.description }}</p>
             </div>
             <div class="card-footer">

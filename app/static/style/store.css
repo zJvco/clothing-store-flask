@@ -9,3 +9,8 @@
 .top-search-category form {
     margin: 0 25px;
 }
+
+.card-body {
+    overflow: auto;
+    max-height: 235px;
+}
