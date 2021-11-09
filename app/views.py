@@ -195,3 +195,10 @@ def profile_deposit_page():
         return redirect(request.url)
     else:
         return render_template("profile/deposit.html", deposit_form=deposit_form)
+
+
+@views.route("/purchases/")
+@login_required
+def purchases_page():
+    purchases = db.session.query(OrderDetail, Product, Order.order_date).join(Order).join(Product).filter(Order.user_id == current_user.id, OrderDetail.order_id == Order.id, OrderDetail.product_id == Product.id).all()
+    return render_template("purchases.html", purchases=purchases)

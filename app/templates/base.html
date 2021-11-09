@@ -45,7 +45,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('views.profile_page') }}">Profile</a>
-                        <a class="dropdown-item" href="#">Purchases</a>
+                        <a class="dropdown-item" href="{{ url_for('views.purchases_page') }}">Purchases</a>
                         {% if current_user.admin %}
                         <a class="dropdown-item" href="{{ url_for('admin.index') }}">Administration</a>
                         {% endif %}
