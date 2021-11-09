@@ -43,7 +43,7 @@
                         <i class="far fa-user"></i>
                         {{ current_user.username }}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="left: -50px;">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('views.profile_page') }}">Profile</a>
                         <a class="dropdown-item" href="#">Purchases</a>
                         {% if current_user.admin %}

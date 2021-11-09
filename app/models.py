@@ -93,14 +93,14 @@ class Address(db.Model):
         return "<Address %r>" % self.id
 
 
-class OrderDetail:
+class OrderDetail(db.Model):
     __tablename__ = "orders_details"
 
-    id = db.Column("id", db.Integer, primary_key=True)
-    order_id = db.Column("order_id", db.Integer, db.ForeignKey("orders.id"), primary_key=True)
-    product_id = db.Column("product_id", db.Integer, db.ForeignKey("products.id"), primary_key=True)
+    id = db.Column("id", db.Integer, autoincrement=True, primary_key=True)
+    order_id = db.Column("order_id", db.Integer, db.ForeignKey("orders.id"))
+    product_id = db.Column("product_id", db.Integer, db.ForeignKey("products.id"))
     quantity = db.Column("quantity", db.Integer, nullable=False)
-    unit_price = db.Column("unit_price", db.Integer, nullable=False)
+    unit_price = db.Column("unit_price", db.Float, nullable=False)
 
     def __repr__(self):
         return "<OrderDetail %r>" % self.id
@@ -109,11 +109,9 @@ class OrderDetail:
 class Order(db.Model):
     __tablename__ = "orders"
 
-    id = db.Column("id", db.Integer, primary_key=True)
+    id = db.Column("id", db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column("user_id", db.Integer, db.ForeignKey("users.id"))
     order_date = db.Column("order_date", db.DateTime(timezone=True), default=func.now())
-
-    # products = db.relationship("Product", secondary="orders_details", backref=db.backref("owners_orders", lazy="dynamic"))
 
     def __repr__(self):
         return "<Order %r>" % self.id

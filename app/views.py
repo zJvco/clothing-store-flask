@@ -20,28 +20,27 @@ def home_page():
 
 @views.route("/store/")
 def store_page():
-    products = Product.query.all()
+    products = Product.query.filter(Product.quantity > 0).all()
     categories = Category.query.all()
     return render_template("store.html", products=products, categories=categories)
 
 
 @views.route("/store/<category>/")
 def store_category_page(category):
-    products = db.session.query(Product).join(Category).filter(Category.name == category.lower()).all()
+    products = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.quantity > 0).all()
     categories = Category.query.all()
     return render_template("store.html", products=products, categories=categories)
 
 
 @views.route("/store/<category>/<product_name>/")
 def store_product_page(category, product_name):
-    product = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.name == product_name.lower()).first()
-    products_by_category = db.session.query(Product).join(Category).filter(Category.name == category.lower()).limit(20).all()
-    other_category_products = db.session.query(Product).join(Category).filter(Category.name != category.lower()).limit(20).all()
-
+    product = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.name == product_name.lower(), Product.quantity > 0).first()
     if not product:
         flash("Product not found", "warning")
         return redirect(url_for("views.store_page"))
-        
+
+    products_by_category = db.session.query(Product).join(Category).filter(Category.name == category.lower()).limit(20).all()
+    other_category_products = db.session.query(Product).join(Category).filter(Category.name != category.lower()).limit(20).all()
     return render_template("product.html", product=product,
                                            products_by_category=products_by_category,
                                            other_category_products=other_category_products)
@@ -57,15 +56,33 @@ def cart_page():
 @login_required
 def buy_page():
     params = json.loads(request.get_data())
-    
+    user = User.query.filter_by(id=current_user.id).first()
+    order = Order(user_id=current_user.id)
+    db.session.add(order)
+
     for param in params:
         product_id = param["id"]
-        quantity = param["quantity"]
-    
+        quantity = int(param["quantity"])
         product = Product.query.filter_by(id=product_id).first()
-        print(product.name)
 
-    return redirect(url_for("views.home_page"))
+        if not product:
+            flash("Product not found", category="warning")
+            return abort(400)
+        elif user.money < product.price:
+            flash("You don't have money to buy this product", category="danger")
+            return abort(400)
+        elif product.quantity < quantity:
+            flash("We no longer have this product in stock", category="warning")
+            return abort(400)
+
+        user.money -= product.price
+        product.quantity -= quantity
+        order_details = OrderDetail(order_id=order.id, product_id=product.id, quantity=quantity, unit_price=product.price)
+        db.session.add(order_details)
+
+    db.session.commit()
+    flash("Successful purchase", category="success")
+    return "success", 201
 
 
 @views.route("/profile/", methods=["GET", "POST"])
@@ -165,7 +182,7 @@ def profile_deposit_page():
 
     if request.method == "POST":
         user = User.query.filter_by(id=current_user.id).first()
-        if deposit_form.validate_on_submit() and user:
+        if deposit_form.validate_on_submit():
             user.money += deposit_form.value.data
             db.session.commit()
             flash("Amount successfully deposited", category="success")

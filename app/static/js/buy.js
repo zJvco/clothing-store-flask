@@ -7,4 +7,8 @@ async function buy(id) {
     }
 
     res = await fetch(`/buy/`, config);
+    
+    if (res) {
+        window.location.reload();
+    }
 }
