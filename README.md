@@ -46,3 +46,6 @@ This file is only to store our function or utilities code to use in our web appl
 
 ### views.py File
 This file contain our majority routes and is the logic of our application. Inside this we have many routes, for example our home, store, profile, cart, buy, address and deposit pages. I'm using a single blueprint to do this, because it is a small project, so, this blueprint is to separete our routes to mantain our application more organized.
+
+## Migrations
+The library Flask-Migrate give us to modify our database struct without altering data.

@@ -1,2 +1,5 @@
 /venv
 /.env
+/relational_model.mwb
+/relational_model.mwb.bak
+/__pycache__
