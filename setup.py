@@ -12,7 +12,7 @@ def read_file(filename):
 
 setup(
     name="Clothing Store",
-    version="0.1.0", # Major, Minor, Path
+    version="0.10.0", # Major, Minor, Path
     description="",
     author="Jvco",
     packages=find_packages(exclude="./venv"),
