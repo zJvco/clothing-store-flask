@@ -35,6 +35,27 @@ This file contain our routes to sign in, sign up and logout users and have more 
 ### cli.py File
 This file contain our cli (Command Line Interface) to create a new user, give admin to an specify user, create database, drop database and delete a user. Its very helpful to do things when we don't have a administration interface.
 
+Create user command:
+```
+flask create_user -u [username] -e [email] -p [password]
+```
+Delete user command:
+```
+flask delete_user -id [user id]
+```
+Make user admin command:
+```
+flask make_admin --email / -e [user email]
+```
+Create database command:
+```
+flask create_db
+```
+Drop database command:
+```
+flask drop_db
+```
+
 ### forms.py File
 This file contain our html forms using a library WTF-Forms, this library render our html form in server-side and give to our html file through jinja. Inside this file we have sign up form, sign in form, address form, edit address form, profile form and deposit form.
 
