@@ -18,6 +18,9 @@ Sign in
             {{ form.password.label(class="form-label") }}
             {{ form.password(class="form-control", id="inputPassword4", placeholder="Password") }}
         </div>
+        <div class="text-center w-100" style="margin-bottom: 6px;">
+            <a class="small" href="{{ url_for('auth.forgot_password_page') }}">Forgot password</a>
+        </div>
         <div class="inpt-field col-12 d-flex justify-content-center">
             {{ form.submit(class="btn btn-primary") }}
         </div>

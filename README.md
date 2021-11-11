@@ -32,7 +32,7 @@ This file contain our flask and our libraries setup, I use a method called Facto
 This file contain our administration interface, we can add sections to our app to manage products and users. Basicly, I put three classes to manage our users, products and products categories.
 
 ### auth.py File
-This file contain our routes to sign in, sign up and logout users and have more control of authentication methods.
+This file contain our routes to sign in, sign up and logout users and have more control of authentication methods. I'm using auth blueprint to auth file.
 
 ### cli.py File
 This file contain our cli (Command Line Interface) to create a new user, give admin to an specify user, create database, drop database and delete a user. Its very helpful to do things when we don't have a administration interface.
@@ -68,7 +68,7 @@ This file is responsible to our data models to persist in the database, we are u
 This file is only to store our function or utilities code to use in our web application.
 
 ### views.py File
-This file contain our majority routes and is the logic of our application. Inside this we have many routes, for example our home, store, profile, cart, buy, address and deposit pages. I'm using a single blueprint to do this, because it is a small project, so, this blueprint is to separete our routes to mantain our application more organized.
+This file contain our majority routes and is the logic of our application. Inside this we have many routes, for example our home, store, profile, cart, buy, address and deposit pages. I'm using a single blueprint to views file, because it is a small project, so, this blueprint is to separete our routes to mantain our application more organized.
 
 ## Migrations
 The library Flask-Migrate give us to modify our database struct without altering data.

@@ -17,6 +17,7 @@ Purchases
 <div class="container">
     <h2 style="margin: 20px 0;">Purchases historic</h2>
     <div class="historic-container">
+        {% if purchases %}
         <table class="table table-borderless">
             <thead>
                 <tr>
@@ -28,23 +29,22 @@ Purchases
                 </tr>
             </thead>
             <tbody>
-                {% if purchases %}
-                    {% for (detail, product, date) in purchases %}
-                    <tr>
-                        <th scope="row">{{ detail.id }}</th>
-                        <td>{{ product.name.title() }}</td>
-                        <td>{{ detail.quantity }}</td>
-                        <td>${{ detail.unit_price }}</td>
-                        <td>{{ date }}</td>
-                    </tr>
-                    {% endfor %}
-                {% else %}
-                <div class="alert alert-warning text-center" role="alert">
-                    You didn't buy any product
-                </div>
-                {% endif %}
+            {% for (detail, product, date) in purchases %}
+            <tr>
+                <th scope="row">{{ detail.id }}</th>
+                <td>{{ product.name.title() }}</td>
+                <td>{{ detail.quantity }}</td>
+                <td>${{ detail.unit_price }}</td>
+                <td>{{ date }}</td>
+            </tr>
+            {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            You didn't buy any product
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

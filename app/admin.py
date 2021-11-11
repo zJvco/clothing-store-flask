@@ -58,6 +58,7 @@ class UserAdmin(ModelView):
 class ProductsAdmin(ModelView):
     form_excluded_columns = ["created_date", "updated_date", "owner_users"]
     column_exclude_list = ["image", "description", "category"]
+    column_searchable_list = ["name"]
 
     def on_model_change(self, form, model, is_created):
         path = "/img"

@@ -4,12 +4,6 @@ from sqlalchemy.sql import func
 from .utils import random_choice_image
 from . import db, bcrypt, login_manager
 
-# orders_details = db.Table("orders_details",
-#     db.Column("order_id", db.Integer, db.ForeignKey("orders.id")),
-#     db.Column("product_id", db.Integer, db.ForeignKey("products.id")),
-#     db.Column("quantity", db.Integer, nullable=False),
-#     db.Column("unit_price", db.Integer, nullable=False)
-# )
 
 @login_manager.user_loader
 def load_user(user_id):

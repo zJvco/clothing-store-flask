@@ -58,3 +58,10 @@ class ProfileForm(FlaskForm):
 class DepositForm(FlaskForm):
     value = IntegerField(label="Value", validators=[DataRequired(), NumberRange(min=10, max=10000)])
     submit = SubmitField(label="Deposit")
+
+
+class ForgotPasswordForm(FlaskForm):
+    email = StringField(label="Email", validators=[Email(), DataRequired()])
+    new_password = PasswordField(label="Password", validators=[Length(min=6, max=128), DataRequired()])
+    new_password_confirm = PasswordField(label="Confirm Password", validators=[EqualTo("new_password"), DataRequired()])
+    submit = SubmitField(label="Change Password")
