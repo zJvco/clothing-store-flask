@@ -16,7 +16,7 @@
             <a class="small text-muted category-link"
                 href="{{ url_for('views.store_category_page', category=product.category.name) }}">category > {{
                 product.category.name }}</a>
-            <h3>{{ product.name.title() }}</h3>
+            <h3 id="product-name">{{ product.name.title() }}</h3>
             <span class="text-success product-price">${{ product.price }}</span>
             <p>{{ product.description.title() }}</p>
             <div class="quantity-row">
@@ -28,7 +28,7 @@
             </div>
             <div class="buy-product">
                 <button type="button" class="btn btn-primary" id="btn-buy" onclick="buy({{ product.id }});">BUY</button>
-                <button type="button" class="btn btn-light" id="add-to-cart">
+                <button type="button" class="btn btn-light" id="add-to-cart" onclick="addToCart({{ product.id }});">
                     <i style="margin-right: 5px;" class="fas fa-shopping-cart"></i>
                     ADD TO CART
                 </button>
@@ -83,7 +83,6 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/buy.js') }}"></script>
-<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 <script src="{{ url_for('static', filename='js/owl.carousel.js') }}"></script>
 <script>
     $('.carousel').owlCarousel({

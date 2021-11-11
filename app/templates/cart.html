@@ -21,53 +21,7 @@ Cart
                     <th>TOTAL</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="product-details">
-                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
-                        <div class="pd-row">
-                            <h5>Nome do Produto</h5>
-                            <p><span class="text-muted">Category: </span>Shoe</p>
-                            <p><span class="text-muted">Product Code: </span>12</p>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="quantity" id="quantity" min="1" max="100">
-                    </td>
-                    <td class="text-success">$100</td>
-                    <td class="text-success">$200</td>
-                </tr>
-                <tr>
-                    <td class="product-details">
-                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
-                        <div class="pd-row">
-                            <h5>Nome do Produto</h5>
-                            <p><span class="text-muted">Category: </span>Shoe</p>
-                            <p><span class="text-muted">Product Code: </span>12</p>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="quantity" id="quantity" min="1" max="100">
-                    </td>
-                    <td class="text-success">$100</td>
-                    <td class="text-success">$200</td>
-                </tr>
-                <tr>
-                    <td class="product-details">
-                        <img src="{{ url_for('static', filename='img/img_1.jpg') }}" alt="nome">
-                        <div class="pd-row">
-                            <h5>Nome do Produto</h5>
-                            <p><span class="text-muted">Category: </span>Shoe</p>
-                            <p><span class="text-muted">Product Code: </span>12</p>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="quantity" id="quantity" min="1" max="100">
-                    </td>
-                    <td class="text-success">$100</td>
-                    <td class="text-success">$200</td>
-                </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
     <div class="order-summary">
@@ -75,13 +29,86 @@ Cart
             <h4>ORDER SUMMARY</h4>
         </div>
         <div class="order-summary-body">
-            <p>ITEMS 2<span>$200</span></p>
-            <p>SHIPPING<span>No one</span></p>
+            <p>ITEMS<span id="total-items"></span></p>
+            <p>QUANTITIES<span id="total-quantities"></span></p>
         </div>
         <div class="order-summary-footer">
-            <p>TOTAL COST<span>$100</span></p>
-            <button class="btn btn-primary w-100">BUY</button>
+            <p>TOTAL COST<span id="total-cost">$100</span></p>
+            <button class="btn btn-primary w-100" onclick="buyByCart()">BUY</button>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/buyByCart.js') }}"></script>
+<script>
+    String.prototype.toTitle = function() {
+        return this.replace(/(^|\s)\S/g, function(t) { return t.toUpperCase() });
+    }
+
+    function displayCartContent() {
+        const cartStorage = JSON.parse(localStorage.getItem("cartStorage"));
+        const tbodyTable = document.querySelector("table tbody");
+        const cartStorageObj = Object.keys(cartStorage);
+
+        const totalItemsEl = document.getElementById("total-items");
+        const totalQuantitiesEl = document.getElementById("total-quantities");
+        const totalCostEl = document.getElementById("total-cost");
+
+        let total = 0;
+        let quantities = 0;
+
+        for (let i = 0; i < cartStorageObj.length; i++) {
+            const productId = cartStorage[cartStorageObj[i]]["id"];
+            const productName = cartStorage[cartStorageObj[i]]["name"].toTitle();
+            const productImage = cartStorage[cartStorageObj[i]]["image"];
+            const productCategory = cartStorage[cartStorageObj[i]]["category"].toTitle();
+            const productCode = cartStorage[cartStorageObj[i]]["id"];
+            const productPrice = cartStorage[cartStorageObj[i]]["price"];
+            const productQuantity = cartStorage[cartStorageObj[i]]["quantity"];
+
+            let productTotal = calcProductTotal(productPrice, productQuantity);
+            total += productTotal;
+            quantities += productQuantity;
+
+            tbodyTable.innerHTML += `
+            <tr>
+                <td class="product-details">
+                    <img src="/static/${productImage}" alt="${productName}">
+                    <div class="pd-row">
+                        <h5>${productName}</h5>
+                        <p><span class="text-muted">Category: </span>${productCategory}</p>
+                        <p><span class="text-muted">Product Code: </span>${productCode}</p>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" name="quantity" id="quantity" min="1" max="100" value=${productQuantity} onchange="changeQuantity(${productId}, value);">
+                </td>
+                <td class="text-success">$${productPrice}</td>
+                <td class="text-success" id="product-total">$${productTotal}</td>
+            </tr>
+            `;
+        }
+
+        totalItemsEl.innerText = `${cartStorageObj.length}`;
+        totalQuantitiesEl.innerText = `${quantities}`;
+        totalCostEl.innerText = `$${total}`;
+    }
+
+    function calcProductTotal(price, quantity) {
+        return price * quantity;
+    }
+
+    function changeQuantity(id, value) {
+        const cartStorage = JSON.parse(localStorage.getItem("cartStorage"));
+        cartStorage[id].quantity = parseInt(value);
+        localStorage.setItem("cartStorage", JSON.stringify(cartStorage));
+        window.location.reload();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        displayCartContent();
+    });
+</script>
 {% endblock %}

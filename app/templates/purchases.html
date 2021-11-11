@@ -1,38 +1,50 @@
 {% extends "base.html" %}
 
+{% block csslinks %}
+<style>
+    .historic-container {
+        max-height: 80vh;
+        overflow: auto;
+    }
+</style>
+{% endblock %}
+
 {% block title %}
 Purchases
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <table class="table table-borderless">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% if purchases %}
-                {% for (detail, product, date) in purchases %}
+    <h2 style="margin: 20px 0;">Purchases historic</h2>
+    <div class="historic-container">
+        <table class="table table-borderless">
+            <thead>
                 <tr>
-                    <th scope="row">{{ detail.id }}</th>
-                    <td>{{ product.name }}</td>
-                    <td>{{ detail.quantity }}</td>
-                    <td>${{ detail.unit_price }}</td>
-                    <td>{{ date }}</td>
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
                 </tr>
-                {% endfor %}
-            {% else %}
-            <div class="alert alert-warning text-center" role="alert">
-                You didn't buy any product
-            </div>
-            {% endif %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% if purchases %}
+                    {% for (detail, product, date) in purchases %}
+                    <tr>
+                        <th scope="row">{{ detail.id }}</th>
+                        <td>{{ product.name.title() }}</td>
+                        <td>{{ detail.quantity }}</td>
+                        <td>${{ detail.unit_price }}</td>
+                        <td>{{ date }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <div class="alert alert-warning text-center" role="alert">
+                    You didn't buy any product
+                </div>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

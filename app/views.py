@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, abort, request, json
+from flask import Blueprint, flash, abort, request, json, jsonify
 from flask import render_template, redirect, url_for
 from flask_login import login_required, current_user
 
@@ -52,6 +52,27 @@ def cart_page():
     return render_template("cart.html")
 
 
+@views.route("/cart/<product_id>/", methods=["POST"])
+@login_required
+def cart_api_page(product_id):
+    product = Product.query.filter_by(id=product_id).first()
+
+    product_data = {
+        "id": product.id,
+        "name": product.name,
+        "category": product.category.name,
+        "price": product.price,
+        "image": product.image,
+        "quantity": None
+    }
+
+    if not product:
+        flash("Product not found")
+        return abort(400)
+
+    return jsonify(product_data), 201
+
+
 @views.route("/buy/", methods=["POST"])
 @login_required
 def buy_page():
@@ -65,17 +86,22 @@ def buy_page():
         quantity = int(param["quantity"])
         product = Product.query.filter_by(id=product_id).first()
 
+        total = product.price * quantity
+
         if not product:
             flash("Product not found", category="warning")
             return abort(400)
-        elif user.money < product.price:
+        elif user.money < total:
             flash("You don't have money to buy this product", category="danger")
             return abort(400)
+        elif not product.quantity:
+            flash("We don't have this product in stock", category="warning")
+            return abort(400)
         elif product.quantity < quantity:
-            flash("We no longer have this product in stock", category="warning")
+            flash("We don't have this amount of product in stock", category="warning")
             return abort(400)
 
-        user.money -= product.price
+        user.money -= total
         product.quantity -= quantity
         order_details = OrderDetail(order_id=order.id, product_id=product.id, quantity=quantity, unit_price=product.price)
         db.session.add(order_details)

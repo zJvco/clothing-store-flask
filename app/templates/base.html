@@ -56,7 +56,7 @@
                 <li class="nav-item">
                     <a class="nav-link cart" href="{{ url_for('views.cart_page') }}">
                         <!-- Corrigir para ver a quantidade que o usuario tem no carrinho -->
-                        <div class="cart-amount">1</div>
+                        <div class="cart-amount"></div>
                         <i class="fas fa-shopping-cart"></i>
                     </a>
                 </li>
@@ -191,6 +191,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='fontawesome/js/all.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
 
