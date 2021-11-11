@@ -1,6 +1,8 @@
 # Clothing Store
 Clothing Store is a website for purchases clothes. The project were made in Flask witch is a micro-framework Python, I did this project to improve my habilities for web and for my final project in CS50x Harvard University.
 
+#### Video Demo: <URL>
+
 ## Dependencies
 This project depends on many libraries to run, this libraries are in requirements.txt, you can run:
 ```

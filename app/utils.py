@@ -11,3 +11,4 @@ def random_choice_image(path):
         if isfile(join(path, file)):
             file_list.append(file)
     return f"{path[pi:]}/{choice(file_list)}"
+    

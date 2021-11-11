@@ -77,7 +77,7 @@ Cart
                 <td class="product-details">
                     <img src="/static/${productImage}" alt="${productName}">
                     <div class="pd-row">
-                        <h5>${productName}</h5>
+                        <h5>${productName}<button onclick="removeCartItem(${productId})"><i class="far fa-trash-alt text-danger"></i></button></h5>
                         <p><span class="text-muted">Category: </span>${productCategory}</p>
                         <p><span class="text-muted">Product Code: </span>${productCode}</p>
                     </div>
@@ -86,7 +86,7 @@ Cart
                     <input type="number" name="quantity" id="quantity" min="1" max="100" value=${productQuantity} onchange="changeQuantity(${productId}, value);">
                 </td>
                 <td class="text-success">$${productPrice}</td>
-                <td class="text-success" id="product-total">$${productTotal}</td>
+                <td class="text-success" id="product-total-${productId}">$${productTotal}</td>
             </tr>
             `;
         }
@@ -100,15 +100,56 @@ Cart
         return price * quantity;
     }
 
-    function changeQuantity(id, value) {
+    function changeQuantity(id, value, cls) {
         const cartStorage = JSON.parse(localStorage.getItem("cartStorage"));
         cartStorage[id].quantity = parseInt(value);
+        localStorage.setItem("cartStorage", JSON.stringify(cartStorage));
+
+        let qntSum = () => {
+            let c = 0;
+            for (let i = 0; i < Object.keys(cartStorage).length; i++) {
+                c += cartStorage[Object.keys(cartStorage)[i]].quantity;
+            }
+            return c;
+        }
+
+        let totSum = () => {
+            let c = 0;
+            for (let i = 0; i < Object.keys(cartStorage).length; i++) {
+                c += cartStorage[Object.keys(cartStorage)[i]].price * cartStorage[Object.keys(cartStorage)[i]].quantity;
+            }
+            return c;
+        }
+
+        let total = calcProductTotal(cartStorage[id].price, cartStorage[id].quantity);
+
+        const productTotalEl = document.getElementById(`product-total-${cartStorage[id].id}`);
+        const totalQuantEl = document.getElementById("total-quantities");
+        const totalCostEl = document.getElementById("total-cost");
+
+        productTotalEl.innerText = `$${total}`;
+        totalQuantEl.innerText = qntSum();
+        totalCostEl.innerText = `$${totSum()}`;
+    }
+
+    function removeCartItem(id) {
+        const cartStorage = JSON.parse(localStorage.getItem("cartStorage"));
+        delete cartStorage[id];
         localStorage.setItem("cartStorage", JSON.stringify(cartStorage));
         window.location.reload();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
         displayCartContent();
+        const shoppingCartContainerEl = document.querySelector(".shopping-cart");
+        const tbodyTableCount = document.querySelector("table tbody").childElementCount;
+        if (!tbodyTableCount > 0) {
+            shoppingCartContainerEl.innerHTML = `
+            <div class="alert alert-warning text-center" role="alert" style="margin: 0 32px 10px 32px">
+                The cart not have products
+            </div>
+            `;
+        }
     });
 </script>
 {% endblock %}

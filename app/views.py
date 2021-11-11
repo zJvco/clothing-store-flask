@@ -77,6 +77,11 @@ def cart_api_page(product_id):
 @login_required
 def buy_page():
     params = json.loads(request.get_data())
+
+    if not params:
+        flash("You don't have any product to buy", category="warning")
+        return abort(400)
+
     user = User.query.filter_by(id=current_user.id).first()
     order = Order(user_id=current_user.id)
     db.session.add(order)

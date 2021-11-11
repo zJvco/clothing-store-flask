@@ -32,7 +32,17 @@ table th {
 }
 
 .product-details h5 {
+    position: relative;
     font-size: 1rem;
+}
+
+.product-details h5 button {
+    position: absolute;
+    right: -12%;
+    top: 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
 .product-details p {
