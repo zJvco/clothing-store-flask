@@ -25,6 +25,14 @@ def store_page():
     return render_template("store.html", products=products, categories=categories)
 
 
+@views.route("/store/search")
+def store_search_page():
+    arg = request.args.get("q").lower()
+    products = Product.query.filter(Product.name.like(f"%{arg}%")).all()
+    categories = Category.query.all()
+    return render_template("store.html", products=products, categories=categories)
+
+
 @views.route("/store/<category>/")
 def store_category_page(category):
     products = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.quantity > 0).all()
