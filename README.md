@@ -6,7 +6,7 @@ Clothing Store is a website for purchases clothes. The project were made in Flas
 ## Dependencies
 This project depends on many libraries to run, this libraries are in requirements.txt, you can run:
 ```
-pip3 -r install requirements.txt
+pip3 install -r requirements.txt
 ```
 I'm using SQLite3, this database comes with python by default and you don't have to install that.
 
