@@ -41,6 +41,7 @@ def store_category_page(category):
 
 
 @views.route("/store/<category>/<product_name>/")
+@login_required
 def store_product_page(category, product_name):
     product = db.session.query(Product).join(Category).filter(Category.name == category.lower(), Product.name == product_name.lower(), Product.quantity > 0).first()
     if not product:
